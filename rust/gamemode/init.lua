@@ -19,7 +19,3 @@ for k, v in pairs(file.Find("sound/rsounds/*", "GAME")) do
     resource.AddFile("sound/rsounds/" .. v)
 end
 
-hook.Add("PlayerSpawning", "PlayerSpawning", function(ply, stats)
-    ply:CreateInventory({}, 36)
-    ply:RegisterPlayer("models/player/darky_m/rust/hazmat.mdl")
-end)
