@@ -1,4 +1,4 @@
-hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, sbox_pnl2, frm)
+hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, frm)
 	if IsValid(frm.btnClose) then frm.btnClose:Hide() end
 	if IsValid(frm.btnMaxim) then frm.btnMaxim:Hide() end
 	if IsValid(frm.btnMinim) then frm.btnMinim:Hide() end
