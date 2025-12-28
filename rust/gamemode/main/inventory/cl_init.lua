@@ -1,4 +1,9 @@
-hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, sbox_pnl2) end)
+hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, sbox_pnl2, frm)
+	if IsValid(frm.btnClose) then frm.btnClose:Hide() end
+	if IsValid(frm.btnMaxim) then frm.btnMaxim:Hide() end
+	if IsValid(frm.btnMinim) then frm.btnMinim:Hide() end
+end)
+
 hook.Add("ScoreboardShow", "MyInventory", function()
 	sAndbox.InventoryMain()
 	return true
