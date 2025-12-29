@@ -12,7 +12,9 @@ local MapBounds = {
 		max = Vector(15544, 15544, 0)
 	}
 }
-
+-- Auto-calibration system
+local calibrationMode = false
+local calibrationData = {min = nil, max = nil}
 local function MapPosToScreen(pnl, pos)
 	if calibrationMode then
 		if not calibrationData.min then
