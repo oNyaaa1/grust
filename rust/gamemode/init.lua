@@ -1,6 +1,12 @@
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
+/*
+Coded perfect rust hud
+Added Compass
+Added Spawning of trees
+
+*/
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
 resource.AddSingleFile("materials/mapz/map.png")
 for k, v in pairs(file.Find("materials/tree/*", "GAME")) do

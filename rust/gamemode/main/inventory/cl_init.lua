@@ -6,6 +6,7 @@ hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, frm)
 	frm:SetDraggable(false)
 end)
 
+sAndbox.HudHide({"CHudHealth", "CHudAmmo", "CHudWeaponSelection", "CHudSecondaryAmmo", "CHudDamageIndicator", "CHudVoiceStatus"})
 hook.Add("ScoreboardShow", "MyInventory", function()
 	sAndbox.InventoryMain()
 	return true

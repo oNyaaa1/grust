@@ -8,7 +8,7 @@ local function zSetHealth(icon, name, length, x, y, col)
     local ply = LocalPlayer()
     if not IsValid(ply) then return end
     local lgnth = 180
-    draw.RoundedBox(4, Hud.Posx + x, Hud.Posy + y, lgnth + 30, 26, Color(160, 152, 140, 255))
+    draw.RoundedBox(4, Hud.Posx + x, Hud.Posy + y, lgnth + 30, 26, Color(64, 64, 64, 100))
     draw.RoundedBox(4, Hud.Posx + x + 30, Hud.Posy + y, lgnth * length, 26, col)
     x = x or 0
     y = y or 0
@@ -23,14 +23,3 @@ hook.Add("HUDPaint", "MrRustHud", function()
     zSetHealth(water, "Health: ", ply:GetThirst() / 280, 1, 30, Color(69, 148, 205))
     zSetHealth(food, "Health: ", ply:GetHunger() / 280, 1, 60, Color(193, 109, 53))
 end)
-
-local hide = {
-    ["CHudHealth"] = true,
-    ["CHudAmmo"] = true,
-    ["CHudWeaponSelection"] = true,
-    ["CHudSecondaryAmmo"] = true,
-    ["CHudDamageIndicator"] = true,
-    ["CHudVoiceStatus"] = true
-}
-
-hook.Add("HUDShouldDraw", "rustHide", function(name) if hide[name] then return false end end)
