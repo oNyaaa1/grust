@@ -18,6 +18,7 @@ end
 local tree = Material("tree/treemarker.png", "noclamp smooth")
 
 function ENT:OnTakeDamage(dmg)
+    if true then return end
     local ply = dmg:GetAttacker()
     if not IsValid(ply) or not ply:IsPlayer() then return end
     local wep = ply:GetActiveWeapon()

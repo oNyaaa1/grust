@@ -1,9 +1,20 @@
-hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, frm)
+-- Material(v.Mats, "noclamp nobips")
+hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, sbox_pnl2, frm, inventory)
 	if IsValid(frm.btnClose) then frm.btnClose:Hide() end
 	if IsValid(frm.btnMaxim) then frm.btnMaxim:Hide() end
 	if IsValid(frm.btnMinim) then frm.btnMinim:Hide() end
 	frm:SetSizable(false)
 	frm:SetDraggable(false)
+	for k, v in pairs(inventory) do
+		local slot = v.Slot
+		if not sAndbox.tnkSlots[slot] then
+			print(v.Mats,slot)
+			//local img = vgui.Create("DImageButton", sbox_pnl2[v.Slot])
+			//img:SetImage(v.Mats)
+			//img:SetSize(90, 86)
+			//sAndbox.tnkSlots[slot] = true
+		end
+	end
 end)
 
 sAndbox.HudHide({"CHudHealth", "CHudAmmo", "CHudWeaponSelection", "CHudSecondaryAmmo", "CHudDamageIndicator", "CHudVoiceStatus"})
@@ -20,27 +31,3 @@ hook.Add("ScoreboardHide", "MyInventory", function()
 	end
 	return true
 end)
-
-if not BlehsAndbox then
-	local x, y = ScrW(), ScrH()
-	sAndbox.pnl2 = {}
-	sAndbox.pnl3 = vgui.Create("DPanel")
-	sAndbox.pnl3:SetPos(x * 0.3, y * 0.88)
-	sAndbox.pnl3:SetSize(602, 110)
-	sAndbox.pnl3.Paint = function(s, w, h) draw.RoundedBox(4, 0, 0, w, h, Color(0, 0, 0, 0)) end
-	local grid2 = vgui.Create("ThreeGrid", sAndbox.pnl3)
-	grid2:Dock(FILL)
-	grid2:DockMargin(4, 4, 4, 4)
-	grid2:InvalidateParent(true)
-	grid2:SetColumns(6)
-	grid2:SetHorizontalMargin(2)
-	grid2:SetVerticalMargin(2)
-	for i = 1, 6 do
-		sAndbox.pnl2[i] = vgui.Create("DPanel")
-		sAndbox.pnl2[i]:SetTall(100)
-		sAndbox.pnl2[i].Paint = function(s, w, h) draw.RoundedBox(4, 0, 0, w, h, Color(64, 64, 64, 200)) end
-		grid2:AddCell(sAndbox.pnl2[i])
-	end
-
-	BlehsAndbox = true
-end
