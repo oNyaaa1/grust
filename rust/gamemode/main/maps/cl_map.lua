@@ -12,22 +12,8 @@ local MapBounds = {
 		max = Vector(15544, 15544, 0)
 	}
 }
--- Auto-calibration system
-local calibrationMode = false
-local calibrationData = {min = nil, max = nil}
-local function MapPosToScreen(pnl, pos)
-	if calibrationMode then
-		if not calibrationData.min then
-			calibrationData.min = Vector(pos.x, pos.y, 0)
-			calibrationData.max = Vector(pos.x, pos.y, 0)
-		else
-			calibrationData.min.x = math.min(calibrationData.min.x, pos.x)
-			calibrationData.min.y = math.min(calibrationData.min.y, pos.y)
-			calibrationData.max.x = math.max(calibrationData.max.x, pos.x)
-			calibrationData.max.y = math.max(calibrationData.max.y, pos.y)
-		end
-	end
 
+local function MapPosToScreen(pnl, pos)
 	local mapName = game.GetMap()
 	local bounds = MapBounds[mapName]
 	if not bounds then return pnl:GetWide() / 2, pnl:GetTall() / 2 end
