@@ -7,16 +7,21 @@ hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, sbox_pnl2, frm, 
 	frm:SetDraggable(false)
 	if sbox_pnl2[slot] and sbox_pnl2[slot].RealSlotID == slot then return end
 	if slot >= 7 and slot <= 30 then
-        sAndbox.img = vgui.Create("DImageButton", sbox_pnl1[slot])
-        sAndbox.img:SetImage(inventory["Mats"])
-        sAndbox.img:SetSize(90, 86)
-        sAndbox.img:Droppable("Inventory_gRust")
-    else
-        sAndbox.img = vgui.Create("DImageButton", sbox_pnl2[slot])
-        sAndbox.img:SetImage(inventory["Mats"])
-        sAndbox.img:SetSize(90, 86)
-        sAndbox.img:Droppable("Inventory_gRust")
-    end
+		sAndbox.img = vgui.Create("DImageButton", sbox_pnl1[slot])
+		sAndbox.img:SetImage(inventory["Mats"])
+		sAndbox.img:SetSize(90, 86)
+		sAndbox.img:Droppable("Inventory_gRust")
+
+
+		BlehsAndbox = true
+	else
+		sAndbox.img = vgui.Create("DImageButton", sbox_pnl2[slot])
+		sAndbox.img:SetImage(inventory["Mats"])
+		sAndbox.img:SetSize(90, 86)
+		sAndbox.img:Droppable("Inventory_gRust")
+
+		BlehsAndbox = true
+	end
 end)
 
 sAndbox.HudHide({"CHudHealth", "CHudAmmo", "CHudWeaponSelection", "CHudSecondaryAmmo", "CHudDamageIndicator", "CHudVoiceStatus"})

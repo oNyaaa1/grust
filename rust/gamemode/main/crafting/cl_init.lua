@@ -25,11 +25,22 @@ function ITEMS:DrawQMenu()
 		DermaButton:SetText("")
 		DermaButton:Dock(TOP)
 		DermaButton:SetTall(40)
+		local selected = false
 		DermaButton.Paint = function(s, w, h)
-			draw.RoundedBox(4, 0, 0, w, h, Color(64, 64, 64, 100))
+			if s:IsHovered() then
+				draw.RoundedBox(4, 0, 0, w, h, Color(0, 172, 195, 100))
+				if not selected then
+					LocalPlayer():EmitSound(sAndbox.GetSounds("piemenu_select"))
+					selected = true
+				end
+			else
+				draw.RoundedBox(4, 0, 0, w, h, Color(64, 64, 64, 100))
+				selected = false
+			end
+
 			surface.SetMaterial(k[2])
 			surface.SetDrawColor(color_white)
-			surface.DrawTexturedRect(0, 0, 30, 30)
+			surface.DrawTexturedRect(0, 4, 30, 30)
 			draw.DrawText(k[1], "DermaDefault", w / 2 - 30, h / 2 - 5, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT)
 		end
 	end

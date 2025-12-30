@@ -2,8 +2,10 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*
-Fixed rock not hitting stuff
-Added Crafting
+Aligned text up on crafting
+Added hover glow on Crafting
+Added sound effect on hover on Crafting
+Added Hover glow to inventory
 
 */
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
