@@ -1,27 +1,12 @@
 -- Material(v.Mats, "noclamp nobips")
-hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, sbox_pnl2, frm, inventory, inventory2, slot)
+local ls = 0
+hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, frm, inventory, slot)
 	if IsValid(frm.btnClose) then frm.btnClose:Hide() end
 	if IsValid(frm.btnMaxim) then frm.btnMaxim:Hide() end
 	if IsValid(frm.btnMinim) then frm.btnMinim:Hide() end
 	frm:SetSizable(false)
 	frm:SetDraggable(false)
-	if sbox_pnl2[slot] and sbox_pnl2[slot].RealSlotID == slot then return end
-	if slot >= 7 and slot <= 30 then
-		sAndbox.img = vgui.Create("DImageButton", sbox_pnl1[slot])
-		sAndbox.img:SetImage(inventory["Mats"])
-		sAndbox.img:SetSize(90, 86)
-		sAndbox.img:Droppable("Inventory_gRust")
-
-
-		BlehsAndbox = true
-	else
-		sAndbox.img = vgui.Create("DImageButton", sbox_pnl2[slot])
-		sAndbox.img:SetImage(inventory["Mats"])
-		sAndbox.img:SetSize(90, 86)
-		sAndbox.img:Droppable("Inventory_gRust")
-
-		BlehsAndbox = true
-	end
+	
 end)
 
 sAndbox.HudHide({"CHudHealth", "CHudAmmo", "CHudWeaponSelection", "CHudSecondaryAmmo", "CHudDamageIndicator", "CHudVoiceStatus"})

@@ -2,10 +2,7 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*
-Aligned text up on crafting
-Added hover glow on Crafting
-Added sound effect on hover on Crafting
-Added Hover glow to inventory
+Fixed an error in inventory
 
 */
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
