@@ -5,12 +5,18 @@ hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, sbox_pnl2, frm, 
 	if IsValid(frm.btnMinim) then frm.btnMinim:Hide() end
 	frm:SetSizable(false)
 	frm:SetDraggable(false)
-	for k, v in pairs(inventory) do
-		local img = vgui.Create("DImageButton", sbox_pnl2[slot])
-		img:SetImage(v.Mats)
-		img:SetSize(90, 86)
-		img:Droppable("Inventory_gRust")
-	end
+	if sbox_pnl2[slot] and sbox_pnl2[slot].RealSlotID == slot then return end
+	if slot >= 7 and slot <= 30 then
+        sAndbox.img = vgui.Create("DImageButton", sbox_pnl1[slot])
+        sAndbox.img:SetImage(inventory["Mats"])
+        sAndbox.img:SetSize(90, 86)
+        sAndbox.img:Droppable("Inventory_gRust")
+    else
+        sAndbox.img = vgui.Create("DImageButton", sbox_pnl2[slot])
+        sAndbox.img:SetImage(inventory["Mats"])
+        sAndbox.img:SetSize(90, 86)
+        sAndbox.img:Droppable("Inventory_gRust")
+    end
 end)
 
 sAndbox.HudHide({"CHudHealth", "CHudAmmo", "CHudWeaponSelection", "CHudSecondaryAmmo", "CHudDamageIndicator", "CHudVoiceStatus"})
