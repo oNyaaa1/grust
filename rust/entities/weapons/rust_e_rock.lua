@@ -30,7 +30,7 @@ function SWEP:Think()
     if self.delay < CurTime() then
         self.delay = CurTime() + 0.5
         local tr = pl:GetEyeTrace()
-        if pl:GetPos():Distance(tr.HitPos) <= 150 and self.Clicked == true then
+        if pl:GetPos():Distance(tr.HitPos) <= 10 and self.Clicked == true then
             local ent = tr.Entity
             local findtwig = string.find(ent:GetModel(), "twig")
             local damage = math.random(1, 6)
