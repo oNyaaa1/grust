@@ -2,9 +2,9 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*
-Fixed rock hitting distance
-Fixed inventory
-Added DragnDrop image:Droppable("Inventory_gRust")
+Fixed rock not hitting stuff
+Added Crafting
+
 */
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
 resource.AddSingleFile("materials/mapz/map.png")
