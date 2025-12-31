@@ -4,8 +4,8 @@ hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, frm, inventory, 
 	if IsValid(frm.btnClose) then frm.btnClose:Hide() end
 	if IsValid(frm.btnMaxim) then frm.btnMaxim:Hide() end
 	if IsValid(frm.btnMinim) then frm.btnMinim:Hide() end
-	frm:SetSizable(false)
-	frm:SetDraggable(false)
+	if IsValid(frm) then frm:SetSizable(false) end
+	if IsValid(frm) then frm:SetDraggable(false) end
 	
 end)
 
