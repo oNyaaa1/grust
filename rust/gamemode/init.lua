@@ -2,10 +2,10 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*
-Fixed a bug where inventory would glitch a rock to the top left
-Fixed another bug that you wouldn't select hands on dropping item
-Fixed an error in console on duplicate items
-Fixed switching between slots
+Fixed not being able to hit trees properly
+Fixed bug being able to select weapon on slot picking
+Fixed bug in item drop
+Added TC [Authorized]
 
 */
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")

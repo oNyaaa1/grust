@@ -38,6 +38,14 @@ function SWEP:Think()
             if ent ~= NULL then self:ShootBullet(damage, 1, 0, "", 0, 1) end
             self:SendWeaponAnim(ACT_VM_SWINGHIT)
             self.Clicked = false
+        elseif pl:GetPos():Distance(tr.HitPos) <= 150 and tr.Entity == "rust_trees" then
+            local ent = tr.Entity
+            local findtwig = string.find(ent:GetModel(), "twig")
+            local damage = math.random(1, 6)
+            if findtwig then damage = 25 end
+            if ent ~= NULL then self:ShootBullet(damage, 1, 0, "", 0, 1) end
+            self:SendWeaponAnim(ACT_VM_SWINGHIT)
+            self.Clicked = false
         end
     end
 end
