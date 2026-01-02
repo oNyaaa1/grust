@@ -4,7 +4,13 @@ SWEP.WorldModel = ""
 SWEP.DrawCrosshair = false
 SWEP.UseHands = true
 SWEP.Automatic = false
-sAndbox.Occupied = {}
+SWEP.Occupied = {}
+sAndbox.Selected = "sent_foundation"
+local ENTITY = FindMetaTable("Entity")
+function ENTITY:GetSocket()
+    return self:GetNWBool("Socket")
+end
+
 if SERVER then
     util.AddNetworkString("gRust_ServerModel_new")
     util.AddNetworkString("gRust_ServerModel")
@@ -25,7 +31,7 @@ if SERVER then
         local pos = enzt:GetPos()
         local trace = util.TraceLine({
             start = pos,
-            endpos = pos - Vector(0, 0, 100),
+            endpos = pos - Vector(0, 0, 25),
             filter = enzt,
             mask = MASK_SOLID_BRUSHONLY
         })
@@ -39,11 +45,22 @@ if SERVER then
         return true
     end
 
+    local function IsValidSpot(ent, vec)
+        local posx = math.Round(vec.x)
+        local posy = math.Round(vec.y)
+        if posx ~= math.Round(ent:GetPos().x) and posy ~= math.Round(ent:GetPos().y) then return false end
+        return true
+    end
+
+    
+    function ENTITY:SetSocket(bool)
+        self:SetNWBool("Socket", bool)
+    end
+
     function SWEP:PrimaryAttack()
         local pl = self:GetOwner()
         if not IsValid(pl) then return end
         pl:SetAnimation(PLAYER_ATTACK1)
-        self:EmitSound("building/hammer_saw_1.wav")
         local ply = self:GetOwner()
         if not IsValid(ply) then return end
         local tr = ply:GetEyeTrace()
@@ -55,24 +72,26 @@ if SERVER then
         local newpos = pos - 120
         local ent_ground = ply:GetGroundEntity()
         local pos2, anglez = ent:FindSocketAdvanced(ply, selectz or "sent_foundation")
-        print(selectz)
         local finalpos = tr.HitPos + tr.HitNormal * newpos
         local newpos2 = IsValid(ent_ground) and ent_ground:GetPos() + pos2 or nil
-        if IsValid(ent_ground) and ent_ground ~= nil and not table.HasValue(sAndbox.Occupied, newpos2) or sAndbox.Selected == "sent_ceiling" then
+        if IsValid(ent_ground) and ent_ground ~= nil or sAndbox.Selected == "sent_ceiling" then
             ent:SetPos(newpos2)
             if anglez then ent:SetAngles(Angle(0, anglez, 0)) end
-            table.insert(sAndbox.Occupied, newpos2)
-        elseif pos >= 128 and pos < 167 and not table.HasValue(sAndbox.Occupied, finalpos) then
+        elseif pos >= 128 and pos < 167 then
             ent:SetPos(finalpos)
-            table.insert(sAndbox.Occupied, finalpos)
+            constraint.Weld(ent, game.GetWorld(), 0, 0, 0, true, true)
+            pl:EmitSound("building/hammer_saw_1.wav")
         end
 
-        if sAndbox.Selected == "sent_ceiling" or self:ValidPosition(ent) and pos <= 170 then
+        if sAndbox.Selected == "sent_ceiling" or self:ValidPosition(ent) and pos <= 170 and tr.Entity:GetSocket() ~= true then
             ent:Spawn()
             ent:Activate()
-        else
-            ent:Remove()
+            ent:SetSocket(true)
+            constraint.Weld(ent, game.GetWorld(), 0, 0, 0, true, true)
+            pl:EmitSound("building/hammer_saw_1.wav")
         end
+
+        if not self:ValidPosition(ent) then ent:Remove() end
     end
 
     function SWEP:SecondaryAttack()
@@ -81,6 +100,7 @@ if SERVER then
         return true
     end
 else
+    sAndbox.Occupied = {}
     function SWEP:PrimaryAttack()
         return true
     end
@@ -138,21 +158,18 @@ else
         local ent_ground = ply:GetGroundEntity()
         local pos2, anglez = self.Entity:FindSocketAdvanced(ply, sAndbox.Selected or "sent_foundation")
         local newpos2 = IsValid(ent_ground) and ent_ground:GetPos() + pos2 or nil
-        if IsValid(ent_ground) and ent_ground ~= nil then
+        local newpos3 = IsValid(tr.Entity) and tr.Entity:GetPos() + pos2 or nil
+        if self:ValidPosition(self.Entity) and IsValid(ent_ground) and ent_ground ~= nil then
             self.Entity:SetPos(newpos2)
             if anglez then self.Entity:SetAngles(Angle(0, anglez, 0)) end
-            table.insert(sAndbox.Occupied, newpos2)
-        elseif pos >= 128 and pos < 167 then
+        elseif pos >= 128 and pos < 167 and not IsValid(tr.Entity) then
             self.Entity:SetPos(tr.HitPos + tr.HitNormal * newpos)
-            table.insert(sAndbox.Occupied, newpos)
+        elseif self:ValidPosition(self.Entity) and IsValid(tr.Entity) then
+            self.Entity:SetPos(newpos3)
+            if anglez then self.Entity:SetAngles(Angle(0, anglez, 0)) end
         end
 
-        if sAndbox.Selected ~= "sent_ceiling" or table.HasValue(sAndbox.Occupied, newpos) or table.HasValue(sAndbox.Occupied, newpos2) then
-            self.Entity:SetColor(Color(255, 0, 0))
-        else
-            self.Entity:SetColor(Color(0, 0, 255))
-        end
-
+        if tr.Entity:GetSocket() == true then self.Entity:Remove() end
         if self:ValidPosition(self.Entity) and self:GetOwner():GetPos():Distance(self.Entity:GetPos()) <= 170 or sAndbox.Selected == "sent_ceiling" then
             self.Entity:SetColor(Color(0, 0, 255))
         else
