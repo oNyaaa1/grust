@@ -4,6 +4,7 @@ SWEP.WorldModel = ""
 SWEP.DrawCrosshair = false
 SWEP.UseHands = true
 SWEP.Automatic = false
+sAndbox.Occupied = {}
 if SERVER then
     util.AddNetworkString("gRust_ServerModel_new")
     util.AddNetworkString("gRust_ServerModel")
@@ -14,7 +15,11 @@ if SERVER then
     end
 
     net.Receive("gRust_ServerModel_new", function() end)
-    net.Receive("gRust_ServerModel", function() end)
+    net.Receive("gRust_ServerModel", function()
+        local str = net.ReadString()
+        sAndbox.Selected = str
+    end)
+
     function SWEP:ValidPosition(enzt)
         if not IsValid(enzt) then return false end
         local pos = enzt:GetPos()
@@ -42,19 +47,27 @@ if SERVER then
         local ply = self:GetOwner()
         if not IsValid(ply) then return end
         local tr = ply:GetEyeTrace()
-        local scripted_ent = scripted_ents.Get(sAndbox.Selected or "sent_foundation")
-        local ent = ents.Create(sAndbox.Selected or "sent_foundation")
+        local selectz = sAndbox.Selected
+        local scripted_ent = scripted_ents.Get(selectz or "sent_foundation")
+        local ent = ents.Create(selectz or "sent_foundation")
         ent:SetModel(scripted_ent.Models)
         local pos = ply:GetPos():Distance(tr.HitPos)
         local newpos = pos - 120
         local ent_ground = ply:GetGroundEntity()
-        local pos2 = ent:FindSocketAdvanced(ply)
-        if IsValid(ent_ground) and ent_ground ~= nil then
-            ent:SetPos(ent_ground:GetPos() + pos2)
-        elseif pos >= 128 and pos < 167 then
-            ent:SetPos(tr.HitPos + tr.HitNormal * newpos)
+        local pos2, anglez = ent:FindSocketAdvanced(ply, selectz or "sent_foundation")
+        print(selectz)
+        local finalpos = tr.HitPos + tr.HitNormal * newpos
+        local newpos2 = IsValid(ent_ground) and ent_ground:GetPos() + pos2 or nil
+        if IsValid(ent_ground) and ent_ground ~= nil and not table.HasValue(sAndbox.Occupied, newpos2) or sAndbox.Selected == "sent_ceiling" then
+            ent:SetPos(newpos2)
+            if anglez then ent:SetAngles(Angle(0, anglez, 0)) end
+            table.insert(sAndbox.Occupied, newpos2)
+        elseif pos >= 128 and pos < 167 and not table.HasValue(sAndbox.Occupied, finalpos) then
+            ent:SetPos(finalpos)
+            table.insert(sAndbox.Occupied, finalpos)
         end
-        if self:ValidPosition(ent) and self:GetOwner():GetPos():Distance(ent:GetPos()) <= 170 then
+
+        if sAndbox.Selected == "sent_ceiling" or self:ValidPosition(ent) and pos <= 170 then
             ent:Spawn()
             ent:Activate()
         else
@@ -123,14 +136,24 @@ else
         local pos = ply:GetPos():Distance(tr.HitPos)
         local newpos = pos - 120
         local ent_ground = ply:GetGroundEntity()
-        local pos2 = self.Entity:FindSocketAdvanced(ply)
+        local pos2, anglez = self.Entity:FindSocketAdvanced(ply, sAndbox.Selected or "sent_foundation")
+        local newpos2 = IsValid(ent_ground) and ent_ground:GetPos() + pos2 or nil
         if IsValid(ent_ground) and ent_ground ~= nil then
-            self.Entity:SetPos(ent_ground:GetPos() + pos2)
+            self.Entity:SetPos(newpos2)
+            if anglez then self.Entity:SetAngles(Angle(0, anglez, 0)) end
+            table.insert(sAndbox.Occupied, newpos2)
         elseif pos >= 128 and pos < 167 then
             self.Entity:SetPos(tr.HitPos + tr.HitNormal * newpos)
+            table.insert(sAndbox.Occupied, newpos)
         end
 
-        if self:ValidPosition(self.Entity) and self:GetOwner():GetPos():Distance(self.Entity:GetPos()) <= 170 then
+        if sAndbox.Selected ~= "sent_ceiling" or table.HasValue(sAndbox.Occupied, newpos) or table.HasValue(sAndbox.Occupied, newpos2) then
+            self.Entity:SetColor(Color(255, 0, 0))
+        else
+            self.Entity:SetColor(Color(0, 0, 255))
+        end
+
+        if self:ValidPosition(self.Entity) and self:GetOwner():GetPos():Distance(self.Entity:GetPos()) <= 170 or sAndbox.Selected == "sent_ceiling" then
             self.Entity:SetColor(Color(0, 0, 255))
         else
             self.Entity:SetColor(Color(255, 0, 0))
