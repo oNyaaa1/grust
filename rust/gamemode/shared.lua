@@ -27,6 +27,11 @@ IncludeDir = function(dir)
         IncludeDir(dir .. '/' .. f)
     end
 end
+
 IncludeDir("rust/gamemode/thirdparty")
 IncludeDir("rust/gamemode/extra")
 IncludeDir("rust/gamemode/main")
+local meta = FindMetaTable("Player")
+function meta:GetWood()
+    return 0
+end

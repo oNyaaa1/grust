@@ -30,8 +30,8 @@ if SERVER then
 
     net.Receive("TC_rust_Authorize", function(len, ply)
         local ent = net.ReadEntity()
-        print(ply:GetPos():Distance(ent:GetPos()))
-        if ply:GetPos():Distance(ent:GetPos()) <= 100 then table.insert(ent.Authorized, ply:SteamID64()) end
+        local trace = ply:GetEyeTrace().Entity
+        if ent == trace then table.insert(ent.Authorized, ply:SteamID64()) end
     end)
 else
     net.Receive("TC_rust_Authorize_Snd", function()

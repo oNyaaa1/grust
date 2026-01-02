@@ -291,8 +291,7 @@ hook.Add("HUDPaint", "AZRM::Render2D", function()
                     net.Start("gRust_ServerModel")
                     net.WriteString(AZN_RadialMenu.emotes[i])
                     net.SendToServer()
-                    if Rust.GhostEntity then Rust.GhostEntity = nil end
-                    Rust.Selected = AZN_RadialMenu.emotes[i]
+                    sAndbox.Selected = AZN_RadialMenu.emotes[i]
                     showMenu = false
                     return
                 end
@@ -322,7 +321,6 @@ hook.Add("HUDPaint", "AZRM::Render2D", function()
                         surface.SetMaterial(foundation)
                         surface.SetDrawColor(0, 0, 0, 255)
                         surface.DrawTexturedRect(centers[i][1], centers[i][2] - fontHeight, 50, 50)
-                        Rust.GhostEntity = nil
                     end
 
                     if AZN_RadialMenu.emotes[i] == "sent_wall" then

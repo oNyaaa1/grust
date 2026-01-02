@@ -5,6 +5,12 @@ hook.Add("PlayerSpawning", "PlayerSpawning", function(ply, stats)
     ply:AddInventoryItem({
         Weapon = "rust_e_rock",
         Mats = "ui/zohart/items/rock.png",
-    },false)
+    }, false)
+
+    ply:AddInventoryItem({
+        Weapon = "rust_buildingplan",
+        Mats = "ui/zohart/icons/inventory/blueprint.png",
+    }, true)
+
     ply:SelectWeapon("rust_e_rock")
 end)

@@ -1,13 +1,10 @@
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
-/*
-Fixed not being able to hit trees properly
-Fixed bug being able to select weapon on slot picking
-Fixed bug in item drop
-Added TC [Authorized]
+--[[
+Added long and short distance to building plan
 
-*/
+]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
 resource.AddSingleFile("materials/mapz/map.png")
 for k, v in pairs(file.Find("materials/tree/*", "GAME")) do
@@ -25,4 +22,3 @@ end
 for k, v in pairs(file.Find("sound/rsounds/*", "GAME")) do
     resource.AddFile("sound/rsounds/" .. v)
 end
-
