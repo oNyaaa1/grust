@@ -29,6 +29,21 @@ if SERVER then
     function SWEP:ValidPosition(enzt)
         if not IsValid(enzt) then return false end
         local pos = enzt:GetPos()
+        
+        -- Check for obstructions for ceiling
+        if sAndbox.Selected == "sent_ceiling" then
+            local mins, maxs = enzt:GetCollisionBounds()
+            local traceData = {
+                start = pos,
+                endpos = pos,
+                mins = mins,
+                maxs = maxs,
+                filter = enzt
+            }
+            local trace = util.TraceHull(traceData)
+            if trace.Hit then return false end
+        end
+        
         local trace = util.TraceLine({
             start = pos,
             endpos = pos - Vector(0, 0, 100),
@@ -53,6 +68,22 @@ if SERVER then
         self:SetNWBool("Socket", bool)
     end
 
+    -- Check if socket position is already occupied
+    function SWEP:IsSocketOccupied(pos, radius)
+        radius = radius or 10  -- Much smaller radius to check exact position
+        local nearby = ents.FindInSphere(pos, radius)
+        for _, ent in ipairs(nearby) do
+            if IsValid(ent) and ent:GetSocket() and ent:GetClass() ~= "worldspawn" then
+                -- Check if positions are very close (same socket)
+                local dist = ent:GetPos():Distance(pos)
+                if dist < 20 then
+                    return true
+                end
+            end
+        end
+        return false
+    end
+
     function SWEP:PrimaryAttack()
         local pl = self:GetOwner()
         if not IsValid(pl) then return end
@@ -71,24 +102,98 @@ if SERVER then
         local pos2, anglez = ent:FindSocketAdvanced(ply, selectz or "sent_foundation")
         local finalpos = tr.HitPos + tr.HitNormal * newpos
         local newpos2 = IsValid(ent_ground) and ent_ground:GetPos() + pos2 or nil
-        if IsValid(ent_ground) and ent_ground ~= nil or sAndbox.Selected == "sent_ceiling" then
+        
+        -- Check if placing a wall without a foundation
+        local isWall = selectz == "sent_wall" or string.find(string.lower(selectz or ""), "wall")
+        if isWall then
+            local hasFoundation = false
+            -- Check if looking at a socketed entity that is NOT a wall
+            if IsValid(tr.Entity) and tr.Entity:GetSocket() then
+                local lookingAtWall = tr.Entity:GetClass() == "sent_wall" or string.find(string.lower(tr.Entity:GetClass() or ""), "wall")
+                if not lookingAtWall then
+                    hasFoundation = true
+                end
+            end
+            -- Check if standing on a socketed entity
+            if IsValid(ent_ground) and ent_ground:GetSocket() then
+                hasFoundation = true
+            end
+            
+            if not hasFoundation then
+                ent:Remove()
+                return
+            end
+        end
+        
+        -- Check if looking at an entity with sockets
+        local targetPos = nil
+        if IsValid(tr.Entity) and tr.Entity:GetSocket() then
+            -- Check if looking at a wall when trying to place a wall
+            local lookingAtWall = tr.Entity:GetClass() == "sent_wall" or string.find(string.lower(tr.Entity:GetClass() or ""), "wall")
+            if not (isWall and lookingAtWall) then
+                -- Attach to the entity being looked at
+                local attachPos, attachAng = ent:FindSocketAdvanced(ply, selectz or "sent_foundation", tr.Entity)
+                if attachPos then
+                    targetPos = tr.Entity:GetPos() + attachPos
+                    ent:SetPos(targetPos)
+                    if attachAng then ent:SetAngles(Angle(0, attachAng, 0)) end
+                end
+            end
+        elseif IsValid(ent_ground) and ent_ground:GetSocket() then
+            targetPos = newpos2
             ent:SetPos(newpos2)
             if anglez then ent:SetAngles(Angle(0, anglez, 0)) end
-        elseif pos >= 128 and pos < 167 then
+        elseif sAndbox.Selected == "sent_ceiling" then
+            -- For ceiling, place directly above the ground entity
+            if IsValid(ent_ground) and ent_ground:GetSocket() then
+                targetPos = ent_ground:GetPos() + Vector(0, 0, 125)
+                ent:SetPos(targetPos)
+            end
+        elseif pos >= 128 and pos < 167 and not isWall then
+            -- Only allow non-wall entities to be placed on ground
+            targetPos = finalpos
             ent:SetPos(finalpos)
             constraint.Weld(ent, game.GetWorld(), 0, 0, 0, true, true)
             pl:EmitSound("building/hammer_saw_1.wav")
         end
 
-        if sAndbox.Selected == "sent_door" or sAndbox.Selected == "sent_ceiling" or self:ValidPosition(ent) then
+        -- Only spawn if position is valid and socket is not occupied
+        if targetPos and self:IsSocketOccupied(targetPos) then
+            ent:Remove()
+            return
+        end
+        
+        -- Don't spawn if no valid target position
+        if not targetPos then
+            ent:Remove()
+            return
+        end
+
+        if sAndbox.Selected == "sent_door" or sAndbox.Selected == "sent_ceiling" or (self:ValidPosition(ent) and not isWall) then
+            ent:Spawn()
+            ent:Activate()
+            ent:SetSocket(true)
+            if sAndbox.Selected == "sent_ceiling" then
+                ent:PhysicsInit(SOLID_VPHYSICS)
+                ent:SetMoveType(MOVETYPE_VPHYSICS)
+                ent:SetSolid(SOLID_VPHYSICS)
+                local phys = ent:GetPhysicsObject()
+                if IsValid(phys) then
+                    phys:EnableMotion(false)
+                end
+            end
+            constraint.Weld(ent, game.GetWorld(), 0, 0, 0, true, true)
+            pl:EmitSound("building/hammer_saw_1.wav")
+        elseif isWall and (IsValid(tr.Entity) and tr.Entity:GetSocket() or IsValid(ent_ground) and ent_ground:GetSocket()) then
+            -- Special case for walls - only spawn if attached to foundation
             ent:Spawn()
             ent:Activate()
             ent:SetSocket(true)
             constraint.Weld(ent, game.GetWorld(), 0, 0, 0, true, true)
             pl:EmitSound("building/hammer_saw_1.wav")
+        else
+            ent:Remove()
         end
-
-        if not self:ValidPosition(ent) then ent:Remove() end
     end
 
     function SWEP:SecondaryAttack()
@@ -112,6 +217,21 @@ else
     function SWEP:ValidPosition(enzt)
         if not IsValid(enzt) then return false end
         local pos = enzt:GetPos()
+        
+        -- Check for obstructions for ceiling
+        if sAndbox.Selected == "sent_ceiling" then
+            local mins, maxs = enzt:GetCollisionBounds()
+            local traceData = {
+                start = pos,
+                endpos = pos,
+                mins = mins,
+                maxs = maxs,
+                filter = enzt
+            }
+            local trace = util.TraceHull(traceData)
+            if trace.Hit then return false end
+        end
+        
         local trace = util.TraceLine({
             start = pos,
             endpos = pos - Vector(0, 0, 100),
@@ -126,6 +246,22 @@ else
         local distanceAboveGround = pos.z - groundHeight
         if distanceAboveGround > 50 then return false end
         return true
+    end
+
+    -- Client-side check for socket occupation
+    function SWEP:IsSocketOccupied(pos, radius)
+        radius = radius or 10  -- Much smaller radius to check exact position
+        local nearby = ents.FindInSphere(pos, radius)
+        for _, ent in ipairs(nearby) do
+            if IsValid(ent) and ent:GetSocket() and ent:GetClass() ~= "worldspawn" then
+                -- Check if positions are very close (same socket)
+                local dist = ent:GetPos():Distance(pos)
+                if dist < 20 then
+                    return true
+                end
+            end
+        end
+        return false
     end
 
     function SWEP:Holster()
@@ -164,15 +300,80 @@ else
         local pos2, anglez = self.Entity:FindSocketAdvanced(ply, sAndbox.Selected or "sent_foundation")
         local newpos2 = IsValid(ent_ground) and ent_ground:GetPos() + pos2 or nil
         local finalpos = tr.HitPos + tr.HitNormal * newpos
-        if IsValid(ent_ground) and ent_ground ~= nil or sAndbox.Selected == "sent_ceiling" then
-            if newpos2 ~= nil then self.Entity:SetPos(newpos2) end
+        
+        local isLookingAtSocket = IsValid(tr.Entity) and tr.Entity:GetSocket()
+        local isWall = sAndbox.Selected == "sent_wall" or string.find(string.lower(sAndbox.Selected or ""), "wall")
+        local hasFoundation = false
+        
+        if isWall then
+            -- Check if looking at a socketed entity that is NOT a wall
+            if isLookingAtSocket then
+                local lookingAtWall = tr.Entity:GetClass() == "sent_wall" or string.find(string.lower(tr.Entity:GetClass() or ""), "wall")
+                if not lookingAtWall then
+                    hasFoundation = true
+                end
+            end
+            -- Check if standing on a socketed entity
+            if IsValid(ent_ground) and ent_ground:GetSocket() then
+                hasFoundation = true
+            end
+            
+            -- Hide preview if wall has no foundation
+            if not hasFoundation then
+                self.Entity:SetNoDraw(true)
+                return
+            else
+                self.Entity:SetNoDraw(false)
+            end
+        else
+            self.Entity:SetNoDraw(false)
+        end
+        
+        -- Check if looking at an entity with sockets
+        if isLookingAtSocket then
+            -- Check if looking at a wall when trying to place a wall
+            local lookingAtWall = tr.Entity:GetClass() == "sent_wall" or string.find(string.lower(tr.Entity:GetClass() or ""), "wall")
+            if not (isWall and lookingAtWall) then
+                -- Attach preview to the entity being looked at
+                local attachPos, attachAng = self.Entity:FindSocketAdvanced(ply, sAndbox.Selected or "sent_foundation", tr.Entity)
+                if attachPos then
+                    self.Entity:SetPos(tr.Entity:GetPos() + attachPos)
+                    if attachAng then self.Entity:SetAngles(Angle(0, attachAng, 0)) end
+                end
+            end
+        elseif IsValid(ent_ground) and ent_ground ~= nil or sAndbox.Selected == "sent_ceiling" then
+            if sAndbox.Selected == "sent_ceiling" and IsValid(ent_ground) and ent_ground:GetSocket() then
+                -- For ceiling, place directly above the ground entity center
+                self.Entity:SetPos(ent_ground:GetPos() + Vector(0, 0, 125))
+            elseif newpos2 ~= nil then
+                self.Entity:SetPos(newpos2)
+            end
             if anglez then self.Entity:SetAngles(Angle(0, anglez, 0)) end
-        elseif pos >= 128 and pos < 167 and not IsValid(tr.Entity) and finalpos ~= Vector(0, 0, 0) then
+        elseif pos >= 128 and pos < 167 and finalpos ~= Vector(0, 0, 0) then
             self.Entity:SetPos(finalpos)
         end
-
-        if tr.Entity:GetSocket() == true then self.Entity:Remove() end
-        if self:ValidPosition(self.Entity) or sAndbox.Selected == "sent_ceiling" then
+        
+        -- Update color based on socket occupation
+        local targetPos = self.Entity:GetPos()
+        
+        if self:IsSocketOccupied(targetPos) then
+            self.Entity:SetColor(Color(255, 0, 0))
+        elseif isLookingAtSocket then
+            -- Check if FindSocketAdvanced returned valid position
+            local attachPos = self.Entity:FindSocketAdvanced(ply, sAndbox.Selected or "sent_foundation", tr.Entity)
+            if attachPos then
+                self.Entity:SetColor(Color(0, 0, 255))
+            else
+                self.Entity:SetColor(Color(255, 0, 0))
+            end
+        elseif sAndbox.Selected == "sent_ceiling" then
+            -- Check for ceiling collision
+            if self:ValidPosition(self.Entity) then
+                self.Entity:SetColor(Color(0, 0, 255))
+            else
+                self.Entity:SetColor(Color(255, 0, 0))
+            end
+        elseif self:ValidPosition(self.Entity) then
             self.Entity:SetColor(Color(0, 0, 255))
         else
             self.Entity:SetColor(Color(255, 0, 0))
