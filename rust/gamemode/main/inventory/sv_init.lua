@@ -1,3 +1,4 @@
+util.AddNetworkString("DAtaSendGrust")
 hook.Add("PlayerSpawn", "sAndbox_PlayerSpawnInventory", function(ply)
     -- Initialize inventory
     ply.Inventory = {}
@@ -20,7 +21,8 @@ hook.Add("PlayerSpawn", "sAndbox_PlayerSpawnInventory", function(ply)
             Weapon = "rust_buildingplan",
             Mats = "ui/zohart/icons/inventory/blueprint.png",
         }, true, 2)
-        
+        net.Start("DAtaSendGrust")
+        net.Send(ply)
         -- Select rock after giving items
         timer.Simple(0.2, function()
             if IsValid(ply) and ply:HasWeapon("rust_e_rock") then

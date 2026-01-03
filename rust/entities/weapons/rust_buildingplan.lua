@@ -143,6 +143,13 @@ else
         if not IsValid(self.Entity) then
             self.Entity = ents.CreateClientProp()
             self.Entity:Spawn()
+            local ply = self:GetOwner()
+            if not IsValid(ply) then return end
+            local tr = ply:GetEyeTrace()
+            local pos = ply:GetPos():Distance(tr.HitPos)
+            local newpos = pos - 120
+            local finalpos = tr.HitPos + tr.HitNormal * newpos
+            self.Entity:SetPos(finalpos)
         end
 
         local ply = self:GetOwner()
@@ -156,12 +163,12 @@ else
         local ent_ground = ply:GetGroundEntity()
         local pos2, anglez = self.Entity:FindSocketAdvanced(ply, sAndbox.Selected or "sent_foundation")
         local newpos2 = IsValid(ent_ground) and ent_ground:GetPos() + pos2 or nil
-        local newpos3 = IsValid(tr.Entity) and tr.Entity:GetPos() + pos2 or nil
+        local finalpos = tr.HitPos + tr.HitNormal * newpos
         if IsValid(ent_ground) and ent_ground ~= nil or sAndbox.Selected == "sent_ceiling" then
             if newpos2 ~= nil then self.Entity:SetPos(newpos2) end
             if anglez then self.Entity:SetAngles(Angle(0, anglez, 0)) end
-        elseif pos >= 128 and pos < 167 and not IsValid(tr.Entity) then
-            self.Entity:SetPos(tr.HitPos + tr.HitNormal * newpos)
+        elseif pos >= 128 and pos < 167 and not IsValid(tr.Entity) and finalpos ~= Vector(0, 0, 0) then
+            self.Entity:SetPos(finalpos)
         end
 
         if tr.Entity:GetSocket() == true then self.Entity:Remove() end
