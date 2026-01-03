@@ -173,6 +173,7 @@ if SERVER then
             ent:Spawn()
             ent:Activate()
             ent:SetSocket(true)
+            sAndbox.SaveStructure()
             if sAndbox.Selected == "sent_ceiling" then
                 ent:PhysicsInit(SOLID_VPHYSICS)
                 ent:SetMoveType(MOVETYPE_VPHYSICS)
@@ -189,6 +190,7 @@ if SERVER then
             ent:Spawn()
             ent:Activate()
             ent:SetSocket(true)
+            sAndbox.SaveStructure()
             constraint.Weld(ent, game.GetWorld(), 0, 0, 0, true, true)
             pl:EmitSound("building/hammer_saw_1.wav")
         else
