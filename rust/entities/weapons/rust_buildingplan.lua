@@ -31,17 +31,14 @@ if SERVER then
         local pos = enzt:GetPos()
         local trace = util.TraceLine({
             start = pos,
-            endpos = pos - Vector(0, 0, 25),
+            endpos = pos - Vector(0, 0, 100),
             filter = enzt,
             mask = MASK_SOLID_BRUSHONLY
         })
 
-        if not trace.Hit then return false end
-        local normalZ = trace.HitNormal.z
-        if normalZ < 0.9 then return false end
         local groundHeight = trace.HitPos.z
         local distanceAboveGround = pos.z - groundHeight
-        if distanceAboveGround > 50 then return false end
+        if distanceAboveGround > 100 then return false end
         return true
     end
 
@@ -52,7 +49,6 @@ if SERVER then
         return true
     end
 
-    
     function ENTITY:SetSocket(bool)
         self:SetNWBool("Socket", bool)
     end
@@ -66,6 +62,7 @@ if SERVER then
         local tr = ply:GetEyeTrace()
         local selectz = sAndbox.Selected
         local scripted_ent = scripted_ents.Get(selectz or "sent_foundation")
+        if sAndbox.Selected == "sent_door" then scripted_ent.Models = "models/deployable/wooden_door.mdl" end
         local ent = ents.Create(selectz or "sent_foundation")
         ent:SetModel(scripted_ent.Models)
         local pos = ply:GetPos():Distance(tr.HitPos)
@@ -83,7 +80,7 @@ if SERVER then
             pl:EmitSound("building/hammer_saw_1.wav")
         end
 
-        if sAndbox.Selected == "sent_ceiling" or self:ValidPosition(ent) and pos <= 170 and tr.Entity:GetSocket() ~= true then
+        if sAndbox.Selected == "sent_door" or sAndbox.Selected == "sent_ceiling" or self:ValidPosition(ent) then
             ent:Spawn()
             ent:Activate()
             ent:SetSocket(true)
@@ -152,6 +149,7 @@ else
         if not IsValid(ply) then return end
         local tr = ply:GetEyeTrace()
         local scripted_ent = scripted_ents.Get(sAndbox.Selected or "sent_foundation")
+        if sAndbox.Selected == "sent_door" then scripted_ent.Models = "models/deployable/wooden_door.mdl" end
         self.Entity:SetModel(scripted_ent.Models)
         local pos = ply:GetPos():Distance(tr.HitPos)
         local newpos = pos - 120
@@ -159,18 +157,15 @@ else
         local pos2, anglez = self.Entity:FindSocketAdvanced(ply, sAndbox.Selected or "sent_foundation")
         local newpos2 = IsValid(ent_ground) and ent_ground:GetPos() + pos2 or nil
         local newpos3 = IsValid(tr.Entity) and tr.Entity:GetPos() + pos2 or nil
-        if self:ValidPosition(self.Entity) and IsValid(ent_ground) and ent_ground ~= nil then
-            self.Entity:SetPos(newpos2)
+        if IsValid(ent_ground) and ent_ground ~= nil or sAndbox.Selected == "sent_ceiling" then
+            if newpos2 ~= nil then self.Entity:SetPos(newpos2) end
             if anglez then self.Entity:SetAngles(Angle(0, anglez, 0)) end
         elseif pos >= 128 and pos < 167 and not IsValid(tr.Entity) then
             self.Entity:SetPos(tr.HitPos + tr.HitNormal * newpos)
-        elseif self:ValidPosition(self.Entity) and IsValid(tr.Entity) then
-            self.Entity:SetPos(newpos3)
-            if anglez then self.Entity:SetAngles(Angle(0, anglez, 0)) end
         end
 
         if tr.Entity:GetSocket() == true then self.Entity:Remove() end
-        if self:ValidPosition(self.Entity) and self:GetOwner():GetPos():Distance(self.Entity:GetPos()) <= 170 or sAndbox.Selected == "sent_ceiling" then
+        if self:ValidPosition(self.Entity) or sAndbox.Selected == "sent_ceiling" then
             self.Entity:SetColor(Color(0, 0, 255))
         else
             self.Entity:SetColor(Color(255, 0, 0))

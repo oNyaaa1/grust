@@ -5,10 +5,9 @@ ENT.PrintName = "Door"
 ENT.Category = ""
 ENT.Spawnable = true
 ENT.AdminOnly = false
-ENT.Models = "models/vasey/wood_house/door.mdl"
 if SERVER then
 	function ENT:Initialize()
-		self.Entity:SetModel("models/vasey/wood_house/door.mdl")
+		self:SetModel("models/deployable/wooden_door.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
