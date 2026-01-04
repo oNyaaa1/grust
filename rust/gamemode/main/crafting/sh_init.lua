@@ -1,9 +1,6 @@
 ITEMS = {}
 ITEMS.ITEM = {}
-function ITEMS:Register(item)
-	table.insert(ITEMS.ITEM, item)
-end
-
+COUNT = COUNT or {}
 ITEMS.Catergories = {
 	[1] = {"FAVORITE", Material("icons/favorite_inactive.png", "noclamp nobips")},
 	[2] = {"COMMON", Material("icons/servers.png", "noclamp nobips")},
@@ -19,3 +16,17 @@ ITEMS.Catergories = {
 	[12] = {"FUN", Material("icons/dots.png", "noclamp nobips")},
 	[13] = {"OTHER", Material("icons/dots.png", "noclamp nobips")}
 }
+
+function ITEMS:RegisterItem(itemName, items, category)
+	self[itemName] = items
+	local countz = 0
+	for k, v in pairs(ITEMS) do
+		if type(v) == "table" and v.Category == category then countz = countz + 1 end
+	end
+
+	COUNT[category] = countz
+end
+
+function ITEMS:GetItem(itemName)
+	return self[itemName]
+end
