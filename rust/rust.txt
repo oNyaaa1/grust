@@ -1,7 +1,7 @@
 "rust"
 {
 	"base"		    "base"
-	"title"		    "gRust | Rust in Garry's Mod"
+	"title"		    "gRust"
 	"maps"		    ""
 	"category"	    "pvp"
 	"menusystem"	"1"
