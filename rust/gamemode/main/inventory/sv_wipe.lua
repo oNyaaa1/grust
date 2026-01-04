@@ -41,6 +41,10 @@ function PLAYER:SaveInventory()
     
     local data = {
         inventory = cleanInventory,
+        position = self:GetPos(),
+        angles = self:GetAngles(),
+        health = self:Health(),
+        armor = self:Armor(),
         timestamp = os.time()
     }
     
@@ -71,6 +75,22 @@ function PLAYER:LoadInventory()
     
     -- Initialize inventory table
     self.Inventory = {}
+    
+    -- Restore position and angles
+    if data.position then
+        self:SetPos(data.position)
+    end
+    if data.angles then
+        self:SetEyeAngles(data.angles)
+    end
+    
+    -- Restore health and armor
+    if data.health then
+        self:SetHealth(data.health)
+    end
+    if data.armor then
+        self:SetArmor(data.armor)
+    end
     
     -- Restore inventory
     local itemCount = 0
