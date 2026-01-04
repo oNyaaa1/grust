@@ -19,7 +19,6 @@ function SWEP:PrimaryAttack()
     self:SendWeaponAnim(ACT_VM_SWINGMISS)
     self.delay = CurTime() + 0.5
     self:SetNextPrimaryFire(CurTime() + 1.5)
-    local tr = pl:GetEyeTrace()
     self.Clicked = true
     timer.Simple(0.5, function() self.Clicked = false end)
 end
@@ -35,7 +34,6 @@ function SWEP:Think()
             local findtwig = string.find(ent:GetModel(), "twig")
             local damage = math.random(1, 6)
             if findtwig then damage = 25 end
-            print(ent, findtwig, damage, tr.Entity:GetClass(), tr.Entity:GetNWInt("health_" .. tr.Entity:GetClass(), 10))
             if ent ~= NULL then self:ShootBullet(damage, 1, 0, "", 0, 1) end
             self:SendWeaponAnim(ACT_VM_SWINGHIT)
             self.Clicked = false
