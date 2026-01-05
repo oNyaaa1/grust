@@ -2,7 +2,8 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 --[[
-Added long and short distance to building plan
+Added Hand cursor to inventory
+
 
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
