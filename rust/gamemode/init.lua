@@ -2,6 +2,11 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 --[[
+Added animation to door
+Fixed buildingplan not removing the clientside model
+Fixed doorways on foundation instead of ground
+Added doorlocks to doors soon you'll need to put them on
+
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
 resource.AddSingleFile("materials/mapz/map.png")

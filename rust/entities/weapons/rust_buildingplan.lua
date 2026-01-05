@@ -73,6 +73,7 @@ if SERVER then
         ent:SetModel(sent.Models or "")
         if class == "sent_door" then ent:SetModel("models/deployable/wooden_door.mdl") end
         local isWall = class == "sent_wall" or string.find(string.lower(class), "wall")
+        local isDoorWay = class == "sent_doorway" or string.find(string.lower(class), "doorway")
         local groundEnt = ply:GetGroundEntity()
         local targetPos = nil
         local targetAng = nil
@@ -97,12 +98,16 @@ if SERVER then
         -- Ceiling special placement
         if not targetPos and class == "sent_ceiling" and IsValid(groundEnt) and groundEnt:GetSocket() then targetPos = groundEnt:GetPos() + Vector(0, 0, 125) end
         -- Free ground placement (non-walls only)
-        if not targetPos and not isWall then
+        if not targetPos and not isWall and not isDoorWay then
             local dist = ply:GetPos():Distance(tr.HitPos)
             if dist >= 128 and dist < 167 then targetPos = tr.HitPos + tr.HitNormal * (dist - 120) end
         end
 
-        -- Walls must be attached to something
+        if isDoorWay and not targetPos then
+            SafeRemoveEntity(ent)
+            return
+        end
+
         if isWall and not targetPos then
             SafeRemoveEntity(ent)
             return
@@ -157,7 +162,7 @@ else -- CLIENT
     function SWEP:GetPreviewEnt()
         if not IsValid(self.PreviewEnt) then
             self.PreviewEnt = ents.CreateClientProp()
-            if IsValid(self.PreviewEnt) then self.PreviewEnt:Spawn() end
+            self.PreviewEnt:Spawn()
         end
         return self.PreviewEnt
     end
@@ -233,9 +238,10 @@ else -- CLIENT
     end
 
     function SWEP:Holster()
-        if IsValid(self.PreviewEnt) then
-            self.PreviewEnt:Remove()
-            self.PreviewEnt = nil
+        local ent = self:GetPreviewEnt()
+        if IsValid(ent) then
+            ent:Remove()
+            ent = nil
         end
         return true
     end
