@@ -59,7 +59,7 @@ end
 
 hook.Add("PlayerInitialSpawn", "AddTrees", function(ply)
     if not TreeSpawned then
-        SpawningSystem.SpawnTrees()
+        //SpawningSystem.SpawnTrees()
         TreeSpawned = true
     end
 end)

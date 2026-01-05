@@ -1,6 +1,20 @@
 ITEMS = {}
 ITEMS.ITEM = {}
 COUNT = COUNT or {}
+if SERVER then
+	util.AddNetworkString("CraftingAbility")
+	net.Receive("CraftingAbility", function(len, ply)
+		local tbl = net.ReadTable()
+		//local str = net.ReadString()
+		local item = ITEMS:GetItem(tbl[1])
+		if not item then return end
+		ply:AddInventoryItem({
+			Weapon = item.Weapon,
+			Mats = item.model,
+		}, true)
+	end)
+end
+
 ITEMS.Catergories = {
 	[1] = {"FAVORITE", Material("icons/favorite_inactive.png", "noclamp nobips")},
 	[2] = {"COMMON", Material("icons/servers.png", "noclamp nobips")},

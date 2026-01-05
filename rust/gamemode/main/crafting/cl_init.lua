@@ -3,6 +3,7 @@ local crafting_frame = nil
 local Width, Height = ScrW(), ScrH()
 local btn = {}
 local Tbl = {}
+local Bottom = nil
 Tbl[1] = {"Favorite", Material("icon16/star.png")}
 Tbl[2] = {"Construction", Material("icon16/brick.png")}
 Tbl[3] = {"Items", Material("icon16/box.png")}
@@ -393,7 +394,7 @@ function ITEMS.DrawQMenu()
 	end
 
 	-- Bottom crafting queue panel
-	local Bottom = vgui.Create("DPanel", pnl_dock_Right)
+	Bottom = vgui.Create("DPanel", pnl_dock_Right)
 	Bottom:Dock(BOTTOM)
 	Bottom:SetTall(110)
 	Bottom.Paint = function(s, w, h)

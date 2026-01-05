@@ -229,7 +229,7 @@ hook.Add("HUDPaint", "AZRM::Render2D", function()
     if not LocalPlayer():Alive() then return end
     local wep = LocalPlayer():GetActiveWeapon()
     if IsValid(wep) then
-        if wep:GetClass() == "hands_hammer" then
+        if wep:GetClass() == "rust_hammer" then
             if showMenu then
                 if not mouseEnabled then
                     gui.EnableScreenClicker(true)

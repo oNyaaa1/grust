@@ -60,15 +60,14 @@ end ]]
 		if ply.Meh == nil then ply.Meh = 0 end
 		if ply.Meh >= CurTime() then return end
 		ply.Meh = CurTime() + 0.2
-		if self.PropOwned ~= ply then
-			ply:ChatPrint("Door is locked")
-			return
-		end
-
+		--if self.PropOwned ~= ply then
+		--ply:ChatPrint("Door is locked")
+		--return
+		--end
 		if self.DoorOpen == false then
 			self.DoorPos = self:GetAngles()
 			self.DoorPosa = self:GetPos()
-			self:SetPos(self:GetPos() + ply:GetForward() + Vector(28, 25, 7))
+			--self:SetPos(self:GetPos() + ply:GetForward() + Vector(28, 25, 7))
 			self:SetAngles(self:GetAngles() + Angle(0, 90, 0))
 			self.DoorOpen = true
 		elseif self.DoorOpen == true then
