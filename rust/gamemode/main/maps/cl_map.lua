@@ -49,6 +49,15 @@ local function ScreenToMapPos(pnl, screenX, screenY)
 	
 	return Vector(worldX, worldY, worldZ)
 end
+
+function DrawTexturedAngle(x, y, w, h, rot, x0, y0)
+	local c = math.cos(math.rad(rot))
+	local s = math.sin(math.rad(rot))
+	local newx = x0 * c - y0 * s
+	local newy = x0 * s + y0 * c
+	surface.DrawTexturedRectRotated(x + newx, y + newy, w, h, rot)
+end
+
 local MapActive = false
 concommand.Add("+gRust_Map", function(ply)
 	if IsValid(DPanel) then DPanel:Remove() end

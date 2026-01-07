@@ -3,8 +3,6 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Map added for rust_highland
-Admins can now teleport using the map by clicking on where they want to go :)
 
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
