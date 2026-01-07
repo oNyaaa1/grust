@@ -61,6 +61,7 @@ if SERVER then
 
     function SWEP:PrimaryAttack()
         local ply = self:GetOwner()
+        if ply.SafeZone then return end
         if not IsValid(ply) then return end
         ply:SetAnimation(PLAYER_ATTACK1)
         local tr = ply:GetEyeTrace()

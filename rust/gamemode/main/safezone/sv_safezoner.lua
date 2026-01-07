@@ -6,4 +6,7 @@ function meta:EnterSafeZone(bool)
     net.WriteBool(bool and true or false)
     net.Send(self)
     self.SafeZone = bool
+    for k, v in pairs(ents.FindByClass("sent_*")) do
+        v:Remove()
+    end
 end

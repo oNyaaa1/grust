@@ -3,8 +3,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Added SafeZone
-
+Can no longer build in safezone
+Turret now locks on to person
 
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")

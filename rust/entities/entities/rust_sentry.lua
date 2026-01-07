@@ -3,6 +3,7 @@ ENT.Base = "base_anim"
 ENT.Type = "anim"
 ENT.PrintName = "Turret"
 ENT.Radius = 360
+ENT.Idle = true
 function AddTurret(ent, pos, ang, shelt)
     if CLIENT then return end
     local entz = ents.Create(shelt)
@@ -23,11 +24,29 @@ function ENT:Initialize()
     self:SetUseType(SIMPLE_USE)
     self.yaw_pos = AddTurret(self, self:GetPos() + Vector(0, 0, 30), Angle(0, 0, 0), "rust_yaw_turret")
     self.pitch = AddTurret(self.yaw_pos, self:GetPos() + Vector(0, 0, 35), Angle(0, 0, 0), "rust_pitch_turret")
-    --self.head = AddTurret(self.pitch, self:GetPos() + Vector(0, 0, -5), Angle(0, 0, 0), "rust_head_turret")
+end
+
+
+function FindTarget(ent)
+    local targ = NULL
+    for k, v in pairs(player.GetAll()) do
+        local distance = v:GetPos():Distance(ent:GetPos())
+        if v == ent then continue end
+        if distance >= 0 and v.SafeZone then
+            targ = v
+        end
+    end
+    return targ
 end
 
 function ENT:Think()
     if CLIENT then return end
-    self.yaw_pos:SetAngles(Angle(0, math.sin(CurTime() * 0.5) * 90, 0))
-    self.pitch:SetAngles(Angle(math.sin(CurTime() * 0.5) * 1, math.sin(CurTime() * 0.5) * 90, 0))
+    local target = FindTarget(self)
+    if target == NULL then
+        self.yaw_pos:SetAngles(Angle(0, math.sin(CurTime() * 0.5) * 90, 0))
+        self.pitch:SetAngles(Angle(math.sin(CurTime() * 0.5) * 1, math.sin(CurTime() * 0.5) * 90, 0))
+    elseif target and IsValid(target) then
+        self.yaw_pos:SetAngles((self:GetPos() - target:GetPos()):Angle())
+        self.pitch:SetAngles((self:GetPos() - target:GetPos()):Angle())
+    end
 end
