@@ -3,7 +3,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-
+Fixed sliding across foundation in certain places
+Can now farm trees
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
 resource.AddSingleFile("materials/mapz/map.png")

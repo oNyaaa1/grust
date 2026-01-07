@@ -70,30 +70,6 @@ ITEMS:RegisterItem("Wood", {
     end,
 }, "Admin")
 
-ITEMS:RegisterItem("Hands", {
-    Name = "Hands",
-    Info = "",
-    Category = "Admin",
-    model = "materials/tree/hands.png",
-    Weapon = "rust_hands",
-    Count = 50,
-    Stackable = true,
-    StackSize = 1,
-    IzAdmin = true,
-    Craft = function()
-        return {
-            {
-                Time = 0,
-                CanCraft = false,
-                {
-                    ITEM = "Hands",
-                    AMOUNT = 0,
-                },
-            },
-        }
-    end,
-}, "Admin")
-
 ITEMS:RegisterItem("Metal Fragments", {
     Name = "Metal Fragments",
     Info = "For Pickaxes etc",

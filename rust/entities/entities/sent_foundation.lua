@@ -15,10 +15,10 @@ if SERVER then
         local phys = self:GetPhysicsObject()
         if phys:IsValid() then
             phys:Wake()
-            //phys:EnableMotion(false)
+            phys:EnableMotion(false)
         end
 
-        constraint.Weld(self, Entity(0), 0, 0, 0, true, true)
+        //constraint.Weld(self, Entity(0), 0, 0, 0, true, true)
         self.Ent_Health = 50
         --self:SetMaterial("Model/effects/vol_light001")
         self:DrawShadow()
