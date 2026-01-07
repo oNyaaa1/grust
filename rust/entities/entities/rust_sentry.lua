@@ -26,15 +26,12 @@ function ENT:Initialize()
     self.pitch = AddTurret(self.yaw_pos, self:GetPos() + Vector(0, 0, 35), Angle(0, 0, 0), "rust_pitch_turret")
 end
 
-
 function FindTarget(ent)
     local targ = NULL
     for k, v in pairs(player.GetAll()) do
         local distance = v:GetPos():Distance(ent:GetPos())
         if v == ent then continue end
-        if distance >= 0 and v.SafeZone then
-            targ = v
-        end
+        if distance >= 0 and v.SafeZone then targ = v end
     end
     return targ
 end
@@ -48,5 +45,14 @@ function ENT:Think()
     elseif target and IsValid(target) then
         self.yaw_pos:SetAngles((self:GetPos() - target:GetPos()):Angle())
         self.pitch:SetAngles((self:GetPos() - target:GetPos()):Angle())
+        --[[local bullet = {}
+        bullet.Num = 1
+        bullet.Src = self:GetPos() + Vector(0, 0, 30)
+        bullet.Dir = target:GetPos() - self:GetPos()
+        bullet.Spread = Vector(0.01, 0.01, 0)
+        bullet.Tracer = 1
+        bullet.Force = 2
+        bullet.Damage = 0
+        self:FireBullets(bullet)]]
     end
 end

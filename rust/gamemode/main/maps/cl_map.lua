@@ -3,7 +3,7 @@ local MapMaterial = ""
 local PlayerMaterial = Material("icons/player_marker.png")
 -- Auto-calibrating map bounds
 local MapBounds = {
-	["rust_highland_v1_3a"] = {
+	["rust_highland"] = {
 		min = Vector(-15544, -15544, 0),
 		max = Vector(15544, 15544, 0)
 	},
@@ -24,15 +24,32 @@ local function MapPosToScreen(pnl, pos)
 	return screenX, screenY
 end
 
--- Draws a textured rect with custom pivot (x0, y0)
-function DrawTexturedAngle(x, y, w, h, rot, x0, y0)
-	local c = math.cos(math.rad(rot))
-	local s = math.sin(math.rad(rot))
-	local newx = x0 * c - y0 * s
-	local newy = x0 * s + y0 * c
-	surface.DrawTexturedRectRotated(x + newx, y + newy, w, h, rot)
+local function ScreenToMapPos(pnl, screenX, screenY)
+	local mapName = game.GetMap()
+	local bounds = MapBounds[mapName]
+	if not bounds then return Vector(0, 0, 0) end
+	
+	local normalizedX = screenX / pnl:GetWide()
+	local normalizedY = 1 - (screenY / pnl:GetTall())
+	
+	local worldX = bounds.min.x + normalizedX * (bounds.max.x - bounds.min.x)
+	local worldY = bounds.min.y + normalizedY * (bounds.max.y - bounds.min.y)
+	
+	-- Trace with player-sized hull
+	local traceDown = util.TraceHull({
+		start = Vector(worldX, worldY, 10000),
+		endpos = Vector(worldX, worldY, -10000),
+		mins = Vector(-16, -16, 0),
+		maxs = Vector(16, 16, 72),
+		mask = MASK_SOLID_BRUSHONLY 
+	})
+	
+	-- Access the result the same way
+	local worldZ = traceDown.Hit and traceDown.HitPos.z or 0
+	
+	return Vector(worldX, worldY, worldZ)
 end
-
+local MapActive = false
 concommand.Add("+gRust_Map", function(ply)
 	if IsValid(DPanel) then DPanel:Remove() end
 	DPanel = vgui.Create("DPanel")
@@ -50,11 +67,13 @@ concommand.Add("+gRust_Map", function(ply)
 		surface.SetDrawColor(255, 0, 0, 255)
 		surface.DrawLine(x - 10, y, x + 10, y)
 		surface.DrawLine(x, y - 10, x, y + 10)
+		MapActive = true
 	end
 end)
 
 concommand.Add("-gRust_Map", function(ply)
 	if IsValid(DPanel) then
+		MapActive = false
 		DPanel:Remove()
 		return
 	end
@@ -62,10 +81,19 @@ end)
 
 local CD = 0
 hook.Add("PlayerButtonDown", "gRust.OpenMap", function(pl, key)
-	if game.GetMap() == "rust_highland_v1_3a" then
-		MapMaterial = Material("materials/misc/map.png")
+	if game.GetMap() == "rust_highland" then
+		MapMaterial = Material("materials/ui/map.png")
 	elseif game.GetMap() == "rust_fields" then
 		MapMaterial = Material("materials/ui/zohart/images/map.png")
+	end
+
+	if MapActive and key == 107 then
+		local x, y = DPanel:CursorPos()
+		local worldPos = ScreenToMapPos(DPanel, x, y)
+		
+		net.Start("gRust_Teleport_Map")
+		net.WriteVector(worldPos)
+		net.SendToServer()
 	end
 
 	if key == KEY_G and CD <= CurTime() and MapMaterial ~= "" then

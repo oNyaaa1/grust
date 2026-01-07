@@ -10,13 +10,12 @@ surface.CreateFont("BigSafeZoneSign", {
 net.Receive("gRust_SafeZone", function()
     -- Is in player safe zone
     safezone = net.ReadBool()
-    
 end)
 
 hook.Add("HUDPaint", "SafeZone", function()
     if safezone then
         surface.SetFont("BigSafeZoneSign")
-        surface.SetTextColor(255,255,255)
+        surface.SetTextColor(255, 255, 255)
         surface.SetTextPos(ScrW() * 0.90, ScrH() * 0.85)
         surface.DrawText("SafeZone")
     end
