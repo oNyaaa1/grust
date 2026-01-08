@@ -3,7 +3,7 @@ local ORE_WEAPONS = {
         Name = "Rock",
         ["Metal Ore"] = 1,
         ["Sulfur Ore"] = 1,
-        ["Stone"] = 1
+        ["Stone"] = 1,
     },
     ["rust_stone_hatchet"] = {
         ["Metal Ore"] = 1.94,
@@ -40,12 +40,12 @@ local TREE_MODELS = {
 local function MineWood(ply, item, amount, ent)
     local me = ply:ExistingInventoryItem({
         Weapon = item
-    }, amount or 0, ent)
+    }, amount or 0)
 
     if me then return end
     ply:AddInventoryItem({
         Weapon = item,
-    }, true, amount or 0, ent)
+    }, true, amount or 0)
 end
 
 hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
@@ -58,5 +58,5 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
     if realwep == nil then return end
     targ.maxHP = TREE_MODELS[targ:GetModel()]
     local hp = targ.maxHP - dmg:GetDamage()
-    MineWood(ply, "Wood", 250, targ)
+    MineWood(ply, "Wood", 12, targ)
 end)
