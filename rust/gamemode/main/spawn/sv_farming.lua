@@ -40,12 +40,12 @@ local TREE_MODELS = {
 local function MineWood(ply, item, amount, ent)
     local me = ply:ExistingInventoryItem({
         Weapon = item
-    }, amount, ent)
+    }, amount or 0, ent)
 
     if me then return end
     ply:AddInventoryItem({
         Weapon = item,
-    }, true, amount, ent)
+    }, true, amount or 0, ent)
 end
 
 hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
