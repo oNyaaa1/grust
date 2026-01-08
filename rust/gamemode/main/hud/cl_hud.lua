@@ -1,6 +1,6 @@
 local Hud = {}
 local w, h = ScrW(), ScrH()
-Hud.Posx, Hud.Posy = w * 0.85, h * 0.88
+Hud.Posx, Hud.Posy = w * 0.83, h * 0.88
 local health = Material("icons/health.png", "noclamp smooth")
 local water = Material("icons/cup.png", "noclamp smooth")
 local food = Material("icons/food.png", "noclamp smooth")

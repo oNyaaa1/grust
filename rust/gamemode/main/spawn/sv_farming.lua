@@ -37,15 +37,15 @@ local TREE_MODELS = {
     ["models/props_foliage/ah_ash_tree_lg.mdl"] = 190
 }
 
-local function MineWood(ply, item, amount)
+local function MineWood(ply, item, amount, ent)
     local me = ply:ExistingInventoryItem({
         Weapon = item
-    }, amount)
+    }, amount, ent)
 
     if me then return end
     ply:AddInventoryItem({
         Weapon = item,
-    }, true, amount)
+    }, true, amount, ent)
 end
 
 hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
@@ -56,7 +56,7 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
     local class = wep:GetClass()
     local realwep = ORE_WEAPONS[class]
     if realwep == nil then return end
-    if not targ.maxHP then targ.maxHP = TREE_MODELS[targ:GetModel()] end
+    targ.maxHP = TREE_MODELS[targ:GetModel()]
     local hp = targ.maxHP - dmg:GetDamage()
-    MineWood(ply, "Wood", 250)
+    MineWood(ply, "Wood", 250, targ)
 end)

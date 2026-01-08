@@ -10,7 +10,7 @@ if SERVER then
 		if not item then return end
 		ply:AddInventoryItem({
 			Weapon = item.Weapon,
-		}, true, 1)
+		}, true, nil, 1)
 	end)
 end
 

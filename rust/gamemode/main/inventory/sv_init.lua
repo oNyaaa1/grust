@@ -11,12 +11,8 @@ hook.Add("PlayerSpawn", "sAndbox_PlayerSpawnInventory", function(ply)
         if not IsValid(ply) then return end
         ply:AddInventoryItem({
             Weapon = "rust_e_rock",
-        }, true, 1, 1)
-
-        ply:AddInventoryItem({
-            Weapon = "rust_buildingplan",
-        }, true, 1, 2)
-
+        }, true, 1, nil,  1)
+        
         net.Start("DAtaSendGrust")
         net.Send(ply)
         -- Select rock after giving items

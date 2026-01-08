@@ -6,7 +6,6 @@ hook.Add("LoadInventory", "Inventory", function(pnl, sbox_pnl1, frm, inventory, 
 	if IsValid(frm.btnMinim) then frm.btnMinim:Hide() end
 	if IsValid(frm) then frm:SetSizable(false) end
 	if IsValid(frm) then frm:SetDraggable(false) end
-	
 end)
 
 sAndbox.HudHide({"CHudHealth", "CHudAmmo", "CHudWeaponSelection", "CHudSecondaryAmmo", "CHudDamageIndicator", "CHudVoiceStatus"})
