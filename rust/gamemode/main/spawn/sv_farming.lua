@@ -22,21 +22,6 @@ local ORE_WEAPONS = {
     }
 }
 
-local TREE_MODELS = {
-    ["models/props_foliage/ah_super_large_pine002.mdl"] = 220,
-    ["models/props_foliage/ah_large_pine.mdl"] = 190,
-    ["models/props/cs_militia/tree_large_militia.mdl"] = 140,
-    ["models/props_foliage/ah_medium_pine.mdl"] = 220,
-    ["models/brg_foliage/tree_scotspine1.mdl"] = 160,
-    ["models/props_foliage/ah_super_pine001.mdl"] = 180,
-    ["models/props_foliage/ah_ash_tree001.mdl"] = 190,
-    ["models/props_foliage/ah_ash_tree_cluster1.mdl"] = 140,
-    ["models/props_foliage/ah_ash_tree_med.mdl"] = 170,
-    ["models/props_foliage/ah_hawthorn_sm_static.mdl"] = 150,
-    ["models/props_foliage/coldstream_cedar_trunk.mdl"] = 170,
-    ["models/props_foliage/ah_ash_tree_lg.mdl"] = 190
-}
-
 local function MineWood(ply, item, amount, ent)
     local me = ply:ExistingInventoryItem({
         Weapon = item
@@ -56,7 +41,7 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
     local class = wep:GetClass()
     local realwep = ORE_WEAPONS[class]
     if realwep == nil then return end
-    targ.maxHP = TREE_MODELS[targ:GetModel()]
-    local hp = targ.maxHP - dmg:GetDamage()
+    --targ.maxHP = TREE_MODELS[targ:GetModel()]
+    --local hp = targ.maxHP - dmg:GetDamage()
     MineWood(ply, "Wood", 12, targ)
 end)

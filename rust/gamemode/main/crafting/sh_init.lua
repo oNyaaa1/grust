@@ -7,21 +7,26 @@ if SERVER then
 		local tbl = net.ReadTable()
 		local toCraft = ""
 		local toAmount = 0
+		local toTime = 30
 		--local str = net.ReadString()
 		local item = ITEMS:GetItem(tbl[1])
 		for k, v in pairs(item:Craft()) do
 			local itemz = v[1]
 			toCraft = itemz.ITEM
 			toAmount = itemz.AMOUNT
+			toTime = v.Time
 		end
 
 		local Count = ply:CountITEM(toCraft)
 		if Count < toAmount then return end
 		if not item then return end
-		ply:AddInventoryItem({
-			Weapon = item.Weapon,
-		}, true, 1)
-		ply:CountRemoveInventoryItem(toCraft,toAmount)
+		timer.Simple(toTime, function()
+			ply:AddInventoryItem({
+				Weapon = item.Weapon,
+			}, true, 1)
+		end)
+
+		ply:CountRemoveInventoryItem(toCraft, toAmount)
 	end)
 end
 

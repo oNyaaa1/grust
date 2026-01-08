@@ -116,7 +116,7 @@ function PLAYER:LoadInventory()
     end
 
     -- Notify client to refresh
-    net.Start("DAtaSendGrust")
+    net.Start("DataSendGrust")
     net.Send(self)
 
     print("[Save System] Loaded " .. itemCount .. " items for " .. self:Nick())

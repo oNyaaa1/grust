@@ -1,9 +1,9 @@
 AddCSLuaFile()
 SWEP.ViewModel = "models/weapons/darky_m/rust/c_rock.mdl"
 SWEP.WorldModel = "models/weapons/darky_m/rust/w_rock.mdl"
-SWEP.DrawCrosshair = false
+SWEP.DrawCrosshair = true
 SWEP.UseHands = true
-SWEP.Automatic = false
+SWEP.Primary.Automatic = true
 function SWEP:Initialize()
     self:SetHoldType("melee2")
     self.delay = 0

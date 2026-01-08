@@ -1,4 +1,4 @@
-util.AddNetworkString("DAtaSendGrust")
+util.AddNetworkString("DataSendGrust")
 hook.Add("PlayerSpawn", "sAndbox_PlayerSpawnInventory", function(ply)
     -- Initialize inventory
     ply.Inventory = {}
@@ -13,7 +13,7 @@ hook.Add("PlayerSpawn", "sAndbox_PlayerSpawnInventory", function(ply)
             Weapon = "rust_e_rock",
         }, true, 1,  1)
         
-        net.Start("DAtaSendGrust")
+        net.Start("DataSendGrust")
         net.Send(ply)
         -- Select rock after giving items
         timer.Simple(0.2, function() if IsValid(ply) and ply:HasWeapon("rust_e_rock") then ply:SelectWeapon("rust_e_rock") end end)
