@@ -2,6 +2,19 @@ ITEMS = {}
 ITEMS.ITEM = {}
 COUNT = COUNT or {}
 if SERVER then
+	concommand.Add("sandbox_wood_give", function(ply, cmd, args)
+		if not ply:IsAdmin() then return end
+		local me = ply:ExistingInventoryItem({
+			Weapon = tostring(args[1])
+		}, tonumber(args[2]))
+
+		if me then return end
+		ply:AddInventoryItem({
+			Weapon = tostring(args[1]),
+		}, true, tonumber(args[2]))
+		--sandbox_wood_give "Wood" 300
+	end)
+
 	util.AddNetworkString("CraftingAbility")
 	net.Receive("CraftingAbility", function(len, ply)
 		local tbl = net.ReadTable()

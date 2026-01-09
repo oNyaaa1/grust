@@ -6,7 +6,7 @@ function Logger(msg)
     print(msg)
 end
 
-local trees = 300
+local trees = 80
 -- Predefined spawn positions
 local function FindRandomPlacesOnMap(count)
     local positions = {}
@@ -28,6 +28,32 @@ local function FindRandomPlacesOnMap(count)
         end
     end
     return positions
+end
+
+function SpawningSystem.SpawnOres()
+    local positions = FindRandomPlacesOnMap(trees)
+    local spawnedCount = 0
+    for _, pos in pairs(positions) do
+        local ent = ents.Create("rust_ores")
+        if IsValid(ent) then
+            ent:SetPos(pos + Vector(0, 0, 250))
+            ent:Spawn()
+            ent:Activate()
+            ent:DropToFloor()
+            spawnedCount = spawnedCount + 1
+            local trace = util.TraceLine({
+                start = ent:GetPos(),
+                endpos = ent:GetPos() - Vector(0, 0, 1000), -- Trace 1000 units downwards
+                filter = ent -- Filter out the entity so it doesn't hit itself
+            })
+
+            local floorNormal = trace.HitNormal
+            local alignedAngles = Vector(1, 0, 0):AngleEx(floorNormal)
+            ent:SetAngles(alignedAngles)
+        end
+    end
+
+    Logger("[Spawning] Spawned " .. spawnedCount .. " Ores")
 end
 
 function SpawningSystem.SpawnTrees()
@@ -59,7 +85,8 @@ end
 
 hook.Add("PlayerInitialSpawn", "AddTrees", function(ply)
     if not TreeSpawned then
-        //SpawningSystem.SpawnTrees()
+        --SpawningSystem.SpawnTrees()
+        SpawningSystem.SpawnOres()
         TreeSpawned = true
     end
 end)

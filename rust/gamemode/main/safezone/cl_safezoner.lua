@@ -15,7 +15,7 @@ end)
 local mat = Material("materials/ui/zohart/icons/safezone.png", "noclamp nobips")
 hook.Add("HUDPaint", "SafeZone", function()
     if safezone then
-        local x, y = ScrW() * 0.85, ScrH() * 0.83
+        local x, y = ScrW() * 0.83, ScrH() * 0.83
         surface.SetDrawColor(145, 193, 20)
         surface.DrawRect(x, y, 210, 40)
         surface.SetMaterial(mat)

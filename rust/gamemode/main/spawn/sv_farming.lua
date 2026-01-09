@@ -43,5 +43,7 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
     if realwep == nil then return end
     --targ.maxHP = TREE_MODELS[targ:GetModel()]
     --local hp = targ.maxHP - dmg:GetDamage()
+    local plytr = ply:GetEyeTrace()
+    if plytr.Entity:GetMaterialType() ~= MAT_WOOD then return end
     MineWood(ply, "Wood", 12, targ)
 end)

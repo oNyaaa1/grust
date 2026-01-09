@@ -1,6 +1,9 @@
 local DPanel
 local MapMaterial = ""
 local PlayerMaterial = Material("icons/player_marker.png")
+local Rust_Ores_Metal = Material("items/resources/metal_ore.png")
+local Rust_Ores_Sulfur = Material("items/resources/sulfur_ore.png")
+local Rust_Ores_Stone = Material("items/resources/stone.png")
 -- Auto-calibrating map bounds
 local MapBounds = {
 	["rust_highland"] = {
@@ -28,25 +31,21 @@ local function ScreenToMapPos(pnl, screenX, screenY)
 	local mapName = game.GetMap()
 	local bounds = MapBounds[mapName]
 	if not bounds then return Vector(0, 0, 0) end
-	
 	local normalizedX = screenX / pnl:GetWide()
 	local normalizedY = 1 - (screenY / pnl:GetTall())
-	
 	local worldX = bounds.min.x + normalizedX * (bounds.max.x - bounds.min.x)
 	local worldY = bounds.min.y + normalizedY * (bounds.max.y - bounds.min.y)
-	
 	-- Trace with player-sized hull
 	local traceDown = util.TraceHull({
 		start = Vector(worldX, worldY, 10000),
 		endpos = Vector(worldX, worldY, -10000),
 		mins = Vector(-16, -16, 0),
 		maxs = Vector(16, 16, 72),
-		mask = MASK_SOLID_BRUSHONLY 
+		mask = MASK_SOLID_BRUSHONLY
 	})
-	
+
 	-- Access the result the same way
 	local worldZ = traceDown.Hit and traceDown.HitPos.z or 0
-	
 	return Vector(worldX, worldY, worldZ)
 end
 
@@ -68,14 +67,35 @@ concommand.Add("+gRust_Map", function(ply)
 		surface.SetDrawColor(255, 255, 255)
 		surface.SetMaterial(MapMaterial)
 		surface.DrawTexturedRect(0, 0, w, h)
+		for k, v in pairs(ents.FindByClass("rust_ores")) do
+			if v:GetSkin() == 3 then
+				local sorx, sory = MapPosToScreen(DPanel, v:GetPos())
+				surface.SetDrawColor(255, 255, 255, 255)
+				surface.SetMaterial(Rust_Ores_Stone)
+				DrawTexturedAngle(sorx, sory, 32, 32, 90, 0, 0)
+			end
+
+			if v:GetSkin() == 1 then
+				local sorxx, soryy = MapPosToScreen(DPanel, v:GetPos())
+				surface.SetDrawColor(255, 255, 255, 255)
+				surface.SetMaterial(Rust_Ores_Metal)
+				DrawTexturedAngle(sorxx, soryy, 32, 32, 90, 0, 0)
+			end
+
+			if v:GetSkin() == 2 then
+				local sorxxx, soryyy = MapPosToScreen(DPanel, v:GetPos())
+				surface.SetDrawColor(255, 255, 255, 255)
+				surface.SetMaterial(Rust_Ores_Sulfur)
+				DrawTexturedAngle(sorxxx, soryyy, 32, 32, 90, 0, 0)
+				--surface.DrawTexturedRect(sorx, sory, 128, 128)
+			end
+		end
+
 		local ToPos = LocalPlayer():GetPos()
 		local x, y = MapPosToScreen(DPanel, ToPos)
 		surface.SetDrawColor(255, 255, 255, 255)
 		surface.SetMaterial(PlayerMaterial)
 		DrawTexturedAngle(x, y, 32, 32, LocalPlayer():GetAngles().y - 90, 0, 0)
-		surface.SetDrawColor(255, 0, 0, 255)
-		surface.DrawLine(x - 10, y, x + 10, y)
-		surface.DrawLine(x, y - 10, x, y + 10)
 		MapActive = true
 	end
 end)
@@ -96,19 +116,18 @@ hook.Add("PlayerButtonDown", "gRust.OpenMap", function(pl, key)
 		MapMaterial = Material("materials/ui/zohart/images/map.png")
 	end
 
-	if MapActive and key == 107 then
-		local x, y = DPanel:CursorPos()
-		local worldPos = ScreenToMapPos(DPanel, x, y)
-		
-		net.Start("gRust_Teleport_Map")
-		net.WriteVector(worldPos)
-		net.SendToServer()
-	end
-
 	if key == KEY_G and CD <= CurTime() and MapMaterial ~= "" then
 		CD = CurTime() + 0.5
 		RunConsoleCommand("+gRust_Map")
 		gui.EnableScreenClicker(true)
+	end
+
+	if MapActive and key == 107 then
+		local x, y = DPanel:CursorPos()
+		local worldPos = ScreenToMapPos(DPanel, x, y)
+		net.Start("gRust_Teleport_Map")
+		net.WriteVector(worldPos)
+		net.SendToServer()
 	end
 end)
 
