@@ -3,15 +3,9 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-calculations are now correct for wood
-e.g sandbox_wood_give "Wood" 300 to give wood or an item u need
-Fixed wood resetting when getting wood etc
-Fixed another wood bug
-Fixed wood where you could hit a player and gain wood xD
-Fixed dropping items not showing there number only true xD
-Hopefully fixed dropping system
-sandbox_wipe to fix the spawning of stuff
-Can now discover when near rust_ores on the map!
+Rocks now spawn on ground instead of air
+Can now farm rocks metal stone sulfur ores
+
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
 resource.AddSingleFile("materials/mapz/map.png")

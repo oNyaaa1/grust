@@ -6,7 +6,7 @@ function Logger(msg)
     print(msg)
 end
 
-local trees = 80
+local trees = 120
 -- Predefined spawn positions
 local function FindRandomPlacesOnMap(count)
     local positions = {}
@@ -22,10 +22,10 @@ local function FindRandomPlacesOnMap(count)
         })
 
         local surfaceMaterial = util.GetSurfacePropName(tr.SurfaceProps)
-        if surfaceMaterial == "grass" then
-            if table.HasValue(positions, tr.HitPos + Vector(0, 0, 10)) then return end
-            if tr.Hit and tr.HitPos.z > 50 and tr.HitPos.z < 1000 then table.insert(positions, tr.HitPos + Vector(0, 0, 10)) end
-        end
+        --if surfaceMaterial == "grass" then
+        if table.HasValue(positions, tr.HitPos + Vector(0, 0, 10)) then return end
+        if tr.Hit and tr.HitPos.z > 50 and tr.HitPos.z < 1000 then table.insert(positions, tr.HitPos + Vector(0, 0, 10)) end
+        --end
     end
     return positions
 end
@@ -36,7 +36,7 @@ function SpawningSystem.SpawnOres()
     for _, pos in pairs(positions) do
         local ent = ents.Create("rust_ores")
         if IsValid(ent) then
-            ent:SetPos(pos + Vector(0, 0, 250))
+            ent:SetPos(pos - Vector(0, 0, 10))
             ent:Spawn()
             ent:Activate()
             ent:DropToFloor()
@@ -47,6 +47,7 @@ function SpawningSystem.SpawnOres()
                 filter = ent -- Filter out the entity so it doesn't hit itself
             })
 
+            --constraint.Weld(self, game.GetWorld(), 0, 0, 0, true, true)
             local floorNormal = trace.HitNormal
             local alignedAngles = Vector(1, 0, 0):AngleEx(floorNormal)
             ent:SetAngles(alignedAngles)
