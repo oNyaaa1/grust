@@ -63,6 +63,8 @@ if SERVER then
         local ply = self:GetOwner()
         if ply.SafeZone then return end
         if not IsValid(ply) then return end
+        local Count = ply:CountITEM("Wood")
+        if Count < 30 then return end
         ply:SetAnimation(PLAYER_ATTACK1)
         local tr = ply:GetEyeTrace()
         if not tr.Hit then return end
@@ -130,6 +132,7 @@ if SERVER then
         ent:Spawn()
         ent:Activate()
         ent:SetSocket(true)
+        ply:CountRemoveInventoryItem("Wood", 30)
         if class == "sent_ceiling" then
             ent:PhysicsInit(SOLID_VPHYSICS)
             ent:SetMoveType(MOVETYPE_VPHYSICS)

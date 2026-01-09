@@ -4,6 +4,7 @@ SWEP.WorldModel = "models/weapons/darky_m/rust/w_rock.mdl"
 SWEP.DrawCrosshair = true
 SWEP.UseHands = true
 SWEP.Primary.Automatic = true
+
 function SWEP:Initialize()
     self:SetHoldType("melee2")
     self.delay = 0
@@ -26,25 +27,31 @@ end
 function SWEP:Think()
     local pl = self:GetOwner()
     if not IsValid(pl) then return end
+    
     if self.delay < CurTime() then
         self.delay = CurTime() + 0.5
         local tr = pl:GetEyeTrace()
-        if pl:GetPos():Distance(tr.HitPos) <= 70 and self.Clicked == true then
+        
+        if self.Clicked == true and tr.Hit then
+            local hitDist = pl:GetPos():Distance(tr.HitPos)
             local ent = tr.Entity
-            local findtwig = string.find(ent:GetModel(), "twig")
-            local damage = math.random(1, 6)
-            if findtwig then damage = 25 end
-            if ent ~= NULL then self:ShootBullet(damage, 1, 0, "", 0, 1) end
-            self:SendWeaponAnim(ACT_VM_SWINGHIT)
-            self.Clicked = false
-        elseif pl:GetPos():Distance(tr.HitPos) <= 150 and tr.Entity == "rust_trees" then
-            local ent = tr.Entity
-            local findtwig = string.find(ent:GetModel(), "twig")
-            local damage = math.random(1, 6)
-            if findtwig then damage = 25 end
-            if ent ~= NULL then self:ShootBullet(damage, 1, 0, "", 0, 1) end
-            self:SendWeaponAnim(ACT_VM_SWINGHIT)
-            self.Clicked = false
+            
+            -- Check if we hit something within range
+            if hitDist <= 150 and IsValid(ent) then
+                local findtwig = string.find(ent:GetModel() or "", "twig")
+                local damage = math.random(1, 6)
+                if findtwig then damage = 25 end
+                
+                -- Hit the entity
+                self:ShootBullet(damage, 1, 0, "", 0, 1)
+                self:SendWeaponAnim(ACT_VM_SWINGHIT)
+                self.Clicked = false
+            elseif hitDist <= 70 then
+                -- Hit within close range (world/props)
+                self:ShootBullet(math.random(1, 6), 1, 0, "", 0, 1)
+                self:SendWeaponAnim(ACT_VM_SWINGHIT)
+                self.Clicked = false
+            end
         end
     end
 end

@@ -22,35 +22,9 @@ local ORE_WEAPONS = {
     }
 }
 
-local function MineRocks(ply, item, amount, ent)
-    local me = ply:ExistingInventoryItem({
-        Weapon = item
-    }, amount or 0)
 
-    if me then return end
-    ply:AddInventoryItem({
-        Weapon = item,
-    }, true, amount or 0)
-end
 
-local function GetTypeRock(typez)
-    if typez:GetSkin() == 3 then
-        --=rock=--
-        return "Stone"
-    end
-
-    if typez:GetSkin() == 1 then
-        --=metal=--
-        return "Metal Ore"
-    end
-
-    if typez:GetSkin() == 2 then
-        --=sulfur=--
-        return "Sulfur Ore"
-    end
-end
-
-hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
+hook.Add("EntityTakeDamage", "Rocks", function(targ, dmg)
     local ply = dmg:GetAttacker()
     if not IsValid(ply) or not ply:IsPlayer() then return end
     local wep = ply:GetActiveWeapon()
@@ -58,11 +32,8 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
     local class = wep:GetClass()
     local realwep = ORE_WEAPONS[class]
     if realwep == nil then return end
-    --targ.maxHP = TREE_MODELS[targ:GetModel()]
-    --local hp = targ.maxHP - dmg:GetDamage()
     local plytr = ply:GetEyeTrace()
-    local rock = GetTypeRock(plytr.Entity)
-    if not rock then return end
-    print(rock)
-    MineRocks(ply, rock, 12, targ)
+    //local rock = GetTypeRock(plytr.Entity)
+    //if not rock then return end
+    --MineRocks(ply, rock, 12, targ)
 end)

@@ -3,8 +3,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Rocks now spawn on ground instead of air
-Can now farm rocks metal stone sulfur ores
+Fixed not being able to farm Trees
+Added rock ores to now give 60 on flare hit 30 on normal
 
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")

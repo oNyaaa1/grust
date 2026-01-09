@@ -13,11 +13,24 @@ function ENT:Initialize()
         phys:Wake()
         phys:EnableMotion(false)
         phys:SetMass(50)
+        phys:SetMaterial("rock") -- Use a high-friction material
+        phys:EnableDrag(false) -- Disable drag so it doesn't slide
     end
 
     self.SetHealthz = 300
-    
     self.SpawnTime = CurTime()
+    -- Get the rock's bounding box
+    -- Get the rock's bounding box in local space
+    -- Get the rock's bounding box in local space
+    local mins, maxs = self:GetModelBounds()
+    -- Random position on top of the rock in local space
+    local randomX = math.Rand(mins.x * 0.2, maxs.x * 0.2)
+    local randomY = math.Rand(mins.y * 0.2, maxs.y * 0.2)
+    local localPos = Vector(randomX, randomY, maxs.z)
+    -- Convert to world space
+    local topPosition = self:LocalToWorld(localPos)
+    self.strongSpot = topPosition
+    self:SetNWVector("StrongSpot", topPosition)
 end
 
 function ENT:SpawnFunction(ply, tr)
@@ -39,6 +52,44 @@ function ENT:RecoveryTime(pos)
     end)
 end
 
+function ENT:UpdateStrongSpot()
+    local mins, maxs = self:GetModelBounds()
+    local randomX = math.Rand(mins.x * 0.7, maxs.x * 0.7)
+    local randomY = math.Rand(mins.y * 0.7, maxs.y * 0.7)
+    local localPos = Vector(randomX, randomY, maxs.z)
+    local topPosition = self:LocalToWorld(localPos)
+    self.strongSpot = topPosition
+    self:SetNWVector("StrongSpot", topPosition)
+end
+
+local function MineRocks(ply, item, amount)
+    local me = ply:ExistingInventoryItem({
+        Weapon = item
+    }, amount or 0)
+
+    if me then return end
+    ply:AddInventoryItem({
+        Weapon = item,
+    }, true, amount or 0)
+end
+
+local function GetTypeRock(typez)
+    if typez:GetSkin() == 3 then
+        --=rock=--
+        return "Stone"
+    end
+
+    if typez:GetSkin() == 1 then
+        --=metal=--
+        return "Metal Ore"
+    end
+
+    if typez:GetSkin() == 2 then
+        --=sulfur=--
+        return "Sulfur Ore"
+    end
+end
+
 function ENT:OnTakeDamage(dmg)
     if not IsValid(self) then return end
     local attacker = dmg:GetAttacker()
@@ -46,13 +97,76 @@ function ENT:OnTakeDamage(dmg)
     attacker:EmitSound("tools/rock_strike_1.mp3")
     if self.SetHealthz == nil then self.SetHealthz = 300 end
     self.SetHealthz = self.SetHealthz - 30
-    if self.SetHealthz <= 240 then self:SetModel("models/environment/ores/ore_node_stage2.mdl") end
-    if self.SetHealthz <= 150 then self:SetModel("models/environment/ores/ore_node_stage3.mdl") end
-    if self.SetHealthz <= 60 then self:SetModel("models/environment/ores/ore_node_stage4.mdl") end
+    -- Then in your damage code:
+    -- Add this function to your entity
+    -- In your damage/hit detection code:
+    local tr = attacker:GetEyeTrace()
+    -- Get the direction from rock center to weak spot
+    local spotDir = (self.strongSpot - self:GetPos()):GetNormalized()
+    -- Get the direction from rock center to where they hit
+    local hitDir = (tr.HitPos - self:GetPos()):GetNormalized()
+    -- Check if the directions are similar (dot product close to 1)
+    local similarity = spotDir:Dot(hitDir)
+    -- In your model change code:
+    if self.SetHealthz <= 240 then
+        self:SetModel("models/environment/ores/ore_node_stage2.mdl")
+        local phys = self:GetPhysicsObject()
+        if IsValid(phys) then
+            phys:Wake()
+            phys:EnableMotion(false)
+            phys:SetMass(50)
+            phys:SetMaterial("rock") -- Use a high-friction material
+            phys:EnableDrag(false) -- Disable drag so it doesn't slide
+        end
+
+        self:UpdateStrongSpot()
+    end
+
+    if self.SetHealthz <= 150 then
+        self:SetModel("models/environment/ores/ore_node_stage3.mdl")
+        local phys = self:GetPhysicsObject()
+        if IsValid(phys) then
+            phys:Wake()
+            phys:EnableMotion(false)
+            phys:SetMass(50)
+            phys:SetMaterial("rock") -- Use a high-friction material
+            phys:EnableDrag(false) -- Disable drag so it doesn't slide
+        end
+
+        self:UpdateStrongSpot()
+    end
+
+    if self.SetHealthz <= 60 then
+        self:SetModel("models/environment/ores/ore_node_stage4.mdl")
+        local phys = self:GetPhysicsObject()
+        if IsValid(phys) then
+            phys:Wake()
+            phys:EnableMotion(false)
+            phys:SetMass(50)
+            phys:SetMaterial("rock") -- Use a high-friction material
+            phys:EnableDrag(false) -- Disable drag so it doesn't slide
+        end
+
+        self:UpdateStrongSpot()
+    end
+
     if self.SetHealthz <= 0 then
         self:RecoveryTime(self:GetPos())
         self:Remove()
     end
+
+    print(similarity)
+    local rock = GetTypeRock(tr.Entity)
+    if not rock then return end
+    if similarity > 0.9 then -- Hit the same general area (0.9 = ~25 degree cone)
+        attacker:EmitSound("farming/flare_hit.wav")
+        self:UpdateStrongSpot()
+        MineRocks(attacker, rock, 60)
+        return
+    end
+
+    print("??")
+    MineRocks(attacker, rock, 30)
 end
 
 function ENT:Think()
