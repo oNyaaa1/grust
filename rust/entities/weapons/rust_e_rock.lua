@@ -21,7 +21,7 @@ function SWEP:PrimaryAttack()
     self.delay = CurTime() + 0.5
     self:SetNextPrimaryFire(CurTime() + 1.5)
     self.Clicked = true
-    timer.Simple(0.5, function() self.Clicked = false end)
+    timer.Simple(1, function() self.Clicked = false end)
 end
 
 function SWEP:Think()

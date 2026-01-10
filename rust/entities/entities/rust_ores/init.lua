@@ -165,7 +165,6 @@ function ENT:OnTakeDamage(dmg)
         return
     end
 
-    print("??")
     MineRocks(attacker, rock, 30)
 end
 

@@ -1,6 +1,8 @@
 ITEMS = {}
 ITEMS.ITEM = {}
 COUNT = COUNT or {}
+
+
 if SERVER then
 	concommand.Add("sandbox_wood_give", function(ply, cmd, args)
 		if not ply:IsAdmin() then return end
