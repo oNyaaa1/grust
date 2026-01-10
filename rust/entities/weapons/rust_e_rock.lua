@@ -37,7 +37,7 @@ function SWEP:Think()
             local ent = tr.Entity
             
             -- Check if we hit something within range
-            if hitDist <= 150 and IsValid(ent) then
+            if hitDist <= 70 and IsValid(ent) then
                 local findtwig = string.find(ent:GetModel() or "", "twig")
                 local damage = math.random(1, 6)
                 if findtwig then damage = 25 end

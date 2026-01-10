@@ -33,13 +33,13 @@ if SERVER then
 		end
 
 		local Count = ply:CountITEM(toCraft)
-		if Count < toAmount then return end
-		if not item then return end
-		timer.Simple(toTime, function()
+		//if Count < toAmount then return end
+		//if not item then return end
+		//timer.Simple(toTime, function()
 			ply:AddInventoryItem({
 				Weapon = item.Weapon,
 			}, true, 1)
-		end)
+		//end)
 
 		ply:CountRemoveInventoryItem(toCraft, toAmount)
 	end)

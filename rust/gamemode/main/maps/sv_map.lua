@@ -28,6 +28,4 @@ net.Receive("gRust_Teleport_Map", function(len, pl)
 		-- Fallback if no ground found
 		pl:SetPos(Vector(mappos.x, mappos.y, 0))
 	end
-
-	pl:SetHealth(100)
 end)

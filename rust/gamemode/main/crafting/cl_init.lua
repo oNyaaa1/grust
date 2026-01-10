@@ -177,7 +177,7 @@ local function RightPanelInfo(parent, ITEM)
 					for i, j in ipairs(v) do
 						if istable(j) and j.ITEM and j.AMOUNT then
 							local playerHave = 0
-							for _, a in pairs(ITEMS.Catergories or {}) do
+							for _, a in pairs({}) do
 								if a.Weapon == j.ITEM then
 									playerHave = a.Amount or 0
 									break
