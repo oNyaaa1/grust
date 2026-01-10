@@ -155,7 +155,6 @@ function ENT:OnTakeDamage(dmg)
         self:Remove()
     end
 
-    print(similarity)
     local rock = GetTypeRock(tr.Entity)
     if not rock then return end
     if similarity > 0.9 then -- Hit the same general area (0.9 = ~25 degree cone)

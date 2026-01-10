@@ -167,7 +167,6 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
     end
 
     targ.Healthz = targ.Healthz - dmg:GetDamage()
-    print(targ.Healthz)
     if targ.Healthz <= 0 then MakeTreeFall(targ) end
     --targ:EmitSound("farming/tree_spray.wav")
     --targ.strongSpot = nil

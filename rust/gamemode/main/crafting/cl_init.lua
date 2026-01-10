@@ -337,7 +337,6 @@ function ITEMS.DrawQMenu()
 			end
 		end
 
-		print(itemCount)
 		if itemCount == 0 then
 			local noItems = vgui.Create("DLabel")
 			noItems:SetSize(400, 50)

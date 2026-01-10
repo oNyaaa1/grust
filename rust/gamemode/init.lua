@@ -3,9 +3,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Now gain double on x marker 
-Stacksize now 1000 on ores
-Trees now fall on <= 0 health
+Fixed going under the map when teleporting
+
 
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
