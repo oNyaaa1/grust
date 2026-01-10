@@ -1,27 +1,14 @@
 game.AddDecal("TreeMarker", "decals/decal_xspray_a_red")
-local ORE_WEAPONS = {
-    ["rust_e_rock"] = {
-        Name = "Rock",
-        ["Metal Ore"] = 1,
-        ["Sulfur Ore"] = 1,
-        ["Stone"] = 1,
-    },
-    ["rust_stone_hatchet"] = {
-        ["Metal Ore"] = 1.94,
-        ["Sulfur Ore"] = 2.57,
-        ["Stone"] = 2.11733
-    },
-    ["rust_pickaxe"] = {
-        ["Metal Ore"] = 2.4,
-        ["Sulfur Ore"] = 3,
-        ["Stone"] = 2.667
-    },
-    ["rust_jackhammer"] = {
-        ["Metal Ore"] = 2.4,
-        ["Sulfur Ore"] = 3,
-        ["Stone"] = 2.667
-    }
-}
+local function MineWoodex(ply, item, amount, ent)
+    local me = ply:ExistingInventoryItem({
+        Weapon = item
+    }, amount * 2 or 0)
+
+    if me then return end
+    ply:AddInventoryItem({
+        Weapon = item,
+    }, true, amount or 0)
+end
 
 local function MineWood(ply, item, amount, ent)
     local me = ply:ExistingInventoryItem({
@@ -34,13 +21,85 @@ local function MineWood(ply, item, amount, ent)
     }, true, amount or 0)
 end
 
+local function MakeTreeFall(ent)
+    if not IsValid(ent) then return end
+    local treePos = ent:GetPos()
+    local treeAngles = ent:GetAngles()
+    local treeModel = ent:GetModel()
+    ent:SetMoveType(MOVETYPE_VPHYSICS)
+    ent:SetSolid(SOLID_VPHYSICS)
+    ent:PhysicsInit(SOLID_VPHYSICS)
+    ent:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+    local phys = ent:GetPhysicsObject()
+    if IsValid(phys) then
+        phys:Wake()
+        phys:SetMass(800)
+        local fallDirection = Angle(0, math.random(0, 360), 0):Forward()
+        fallDirection.z = 0
+        fallDirection:Normalize()
+        local torque = Vector(fallDirection.y, -fallDirection.x, 0) * 3000
+        phys:ApplyTorqueCenter(torque)
+        local push = fallDirection * 100
+        push.z = -50
+        phys:ApplyForceCenter(push)
+        phys:SetMass(800)
+    end
+
+    ent.treeFallen = true
+    timer.Simple(3, function()
+        if IsValid(ent) then
+            local alpha = 255
+            local fadeTimer = "tree_fade_" .. ent:EntIndex()
+            timer.Create(fadeTimer, 0.1, 40, function()
+                if IsValid(ent) then
+                    alpha = alpha - 6.375
+                    ent:SetColor(Color(255, 255, 255, math.max(0, alpha)))
+                    ent:SetRenderMode(RENDERMODE_TRANSALPHA)
+                    if alpha <= 0 then
+                        timer.Remove(fadeTimer)
+                        ent:Remove()
+                    end
+                else
+                    timer.Remove(fadeTimer)
+                end
+            end)
+        end
+    end)
+
+    timer.Simple(math.random(600, 900), function()
+        local newTree = ents.Create("rust_trees")
+        if IsValid(newTree) then
+            newTree:SetModel(treeModel)
+            newTree:SetPos(treePos)
+            newTree:SetAngles(treeAngles)
+            newTree:Spawn()
+            newTree:Activate()
+            newTree.treeHealth = nil
+            newTree.treeHits = nil
+            newTree.treeFallen = false
+        end
+    end)
+end
+
+local WOOD_WEAPONS = {
+    ["rust_e_rock"] = {
+        mult = 1
+    },
+    ["tfa_rustalpha_stone_hatchet"] = {
+        mult = 1.3
+    },
+    ["tfa_rustalpha_hatchet"] = {
+        mult = 1.8
+    }
+}
+
 hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
     local ply = dmg:GetAttacker()
     if not IsValid(ply) or not ply:IsPlayer() then return end
     local wep = ply:GetActiveWeapon()
     if not IsValid(wep) then return end
     local class = wep:GetClass()
-    local realwep = ORE_WEAPONS[class]
+    local realwep = WOOD_WEAPONS[class]
     if realwep == nil then return end
     local plytr = ply:GetEyeTrace()
     if plytr.Entity:GetMaterialType() ~= MAT_WOOD then return end
@@ -77,9 +136,12 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
         util.Decal("TreeMarker", startPos + plytr.HitNormal * 2, startPos - plytr.HitNormal * 2)
     end
 
+    if not targ.Healthz then targ.Healthz = 200 end
     -- If there's no marker placed yet, accept any hit
     if not targ.LastDecalPos then
         if decalTrace.Hit then
+            targ.Healthz = targ.Healthz - dmg:GetDamage() * 3
+            MineWoodex(ply, "Wood", 12, targ)
             targ:EmitSound("farming/tree_spray.wav")
             targ:RemoveAllDecals()
             util.Decal("TreeMarker", decalTrace.HitPos + decalTrace.HitNormal, decalTrace.HitPos - decalTrace.HitNormal, game.GetWorld())
@@ -89,9 +151,11 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
     else
         -- Marker exists, check if player hit close enough
         if decalTrace.Hit then
+            targ.Healthz = targ.Healthz - dmg:GetDamage() * 3
             local hitDistance = startPos:Distance(decalTrace.HitPos)
             local maxHitDistance = 20 -- Adjust this value to make it easier/harder to hit
             if hitDistance <= maxHitDistance then
+                MineWoodex(ply, "Wood", 12, targ)
                 -- Player hit the marker!
                 targ:EmitSound("farming/tree_spray.wav")
                 targ:RemoveAllDecals()
@@ -102,6 +166,9 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
         end
     end
 
+    targ.Healthz = targ.Healthz - dmg:GetDamage()
+    print(targ.Healthz)
+    if targ.Healthz <= 0 then MakeTreeFall(targ) end
     --targ:EmitSound("farming/tree_spray.wav")
     --targ.strongSpot = nil
     --targ:RemoveAllDecals()

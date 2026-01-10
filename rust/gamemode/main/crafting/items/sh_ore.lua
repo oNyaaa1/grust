@@ -6,7 +6,7 @@ ITEMS:RegisterItem("Sulfur Ore", {
     Weapon = "",
     Count = 50,
     Stackable = true,
-    StackSize = 2000,
+    StackSize = 1000,
     IzAdmin = true,
     Craft = function()
         return {
@@ -30,7 +30,7 @@ ITEMS:RegisterItem("Metal Ore", {
     Weapon = "",
     Count = 50,
     Stackable = true,
-    StackSize = 2000,
+    StackSize = 1000,
     IzAdmin = true,
     Craft = function()
         return {
@@ -55,7 +55,7 @@ ITEMS:RegisterItem("Stone", {
     Count = 50,
     Stackable = true,
     IzAdmin = true,
-    StackSize = 2000,
+    StackSize = 1000,
     Craft = function()
         return {
             {

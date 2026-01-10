@@ -3,9 +3,9 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Fixed rock not hitting some times
-Added rock ores to now give 60 on flare hit 30 on normal
-Added xmarker to trees
+Now gain double on x marker 
+Stacksize now 1000 on ores
+Trees now fall on <= 0 health
 
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
