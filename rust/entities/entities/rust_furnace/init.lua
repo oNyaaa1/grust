@@ -1,12 +1,14 @@
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
+util.AddNetworkString("gRustFurnace")
 ENT.SetHealthz = 100
 function ENT:Initialize()
     self:SetModel("models/deployable/furnace.mdl")
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
+    self:SetUseType(SIMPLE_USE)
     local phys = self:GetPhysicsObject()
     if IsValid(phys) then
         phys:Wake()
@@ -36,6 +38,9 @@ function ENT:Think()
 end
 
 function ENT:Use(btn, ply)
+    net.Start("gRustFurnace")
+    net.WriteEntity(self)
+    net.Send(ply)
 end
 
 function ENT:StartTouch(ent)
