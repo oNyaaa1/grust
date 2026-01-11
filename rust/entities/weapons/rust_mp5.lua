@@ -1,6 +1,6 @@
 AddCSLuaFile()
-SWEP.ViewModel = "models/weapons/darky_m/rust/c_m249.mdl"
-SWEP.WorldModel = "models/weapons/darky_m/rust/w_m249.mdl"
+SWEP.ViewModel = "models/weapons/darky_m/rust/c_mp5.mdl"
+SWEP.WorldModel = "models/weapons/darky_m/rust/w_mp5.mdl"
 SWEP.DrawCrosshair = true
 SWEP.UseHands = true
 SWEP.Primary.Automatic = true
