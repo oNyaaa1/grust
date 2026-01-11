@@ -342,3 +342,210 @@ ITEMS:RegisterItem("rust_smg", {
         }
     end,
 }, "Weapons")
+
+ITEMS:RegisterItem("rust_thompson", {
+    Name = "Custom Thompson",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/thompson.png",
+    Weapon = "rust_thompson",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_lr300", {
+    Name = "LR-300 Assault Rifle",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/lr300.png",
+    Weapon = "rust_lr300",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_crossbow", {
+    Name = "Crossbow",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/crossbow.png",
+    Weapon = "rust_crossbow",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_huntingbow", {
+    Name = "Hunting Bow",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/hunting_bow.png",
+    Weapon = "rust_huntingbow",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_boltrifle", {
+    Name = "Bolt Action Rifle",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/bolt_rifle.png",
+    Weapon = "rust_boltrifle",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_waterpipe", {
+    Name = "Waterpipe Shotgun",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/waterpipe.png",
+    Weapon = "rust_waterpipe",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_rpg", {
+    Name = "Rocket Launcher",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/rocket_launcher.png",
+    Weapon = "rust_rpg",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_dbarrel", {
+    Name = "Double Barrel Shotgun",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/dbarrel.png",
+    Weapon = "rust_dbarrel",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_pumpshotgun", {
+    Name = "Pump Shotgun",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/pump_shotgun.png",
+    Weapon = "rust_pumpshotgun",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")

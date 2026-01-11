@@ -1,6 +1,6 @@
 AddCSLuaFile()
-SWEP.ViewModel = "models/weapons/darky_m/rust/c_customsmg.mdl"
-SWEP.WorldModel = "models/weapons/darky_m/rust/w_smg.mdl"
+SWEP.ViewModel = "models/weapons/darky_m/rust/c_waterpipe.mdl"
+SWEP.WorldModel = "models/weapons/darky_m/rust/w_waterpipe.mdl"
 SWEP.DrawCrosshair = true
 SWEP.UseHands = true
 SWEP.Primary.Automatic = true
@@ -15,9 +15,9 @@ function SWEP:PrimaryAttack()
     if not IsValid(pl) then return end
     if SERVER and pl.ConsumeDurabilityForWeapon then pl:ConsumeDurabilityForWeapon(self) end
     pl:SetAnimation(PLAYER_ATTACK1)
-    self:EmitSound("weapons/rust_distant/sar-attack.mp3")
+    self:EmitSound("weapons/rust_distant/lr300-attack.mp3")
     self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
-    self:SetNextPrimaryFire(CurTime() + 0.15)
+    self:SetNextPrimaryFire(CurTime() + 1)
     local bullet = {}
     bullet.Num = 1
     bullet.Src = pl:GetShootPos()
@@ -25,11 +25,21 @@ function SWEP:PrimaryAttack()
     bullet.Spread = 0.4
     bullet.Tracer = 3
     bullet.Force = 1
-    bullet.Damage = 25
+    bullet.Damage = 35
     bullet.Attacker = pl
     pl:FireBullets(bullet)
+    self.Clicked = false
     local BulletsFire = math.random(0.4, 0.5)
     pl:SetEyeAngles(pl:GetAngles() - Angle(BulletsFire, BulletsFire, 0))
+end
+
+function SWEP:Reload()
+    if self.delay >= CurTime() then return end
+    if self.Clicked then return end
+    self.delay = CurTime() + 1.1
+    self.Clicked = true
+    self:SendWeaponAnim(ACT_VM_RELOAD)
+    timer.Simple(1, function() self:SendWeaponAnim(ACT_VM_PRIMARYATTACK) end)
 end
 
 function SWEP:Think()
