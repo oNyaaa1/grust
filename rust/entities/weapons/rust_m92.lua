@@ -1,6 +1,6 @@
 AddCSLuaFile()
-SWEP.ViewModel = "models/weapons/darky_m/rust/c_m39emr.mdl"
-SWEP.WorldModel = "models/weapons/darky_m/rust/w_m39.mdl"
+SWEP.ViewModel = "models/weapons/darky_m/rust/c_m92.mdl"
+SWEP.WorldModel = "models/weapons/darky_m/rust/w_m92.mdl"
 SWEP.DrawCrosshair = true
 SWEP.UseHands = true
 SWEP.Primary.Automatic = true
@@ -15,7 +15,7 @@ function SWEP:PrimaryAttack()
     if not IsValid(pl) then return end
     if SERVER and pl.ConsumeDurabilityForWeapon then pl:ConsumeDurabilityForWeapon(self) end
     pl:SetAnimation(PLAYER_ATTACK1)
-   self:EmitSound("weapons/rust_distant/m39-attack.mp3")
+   self:EmitSound("weapons/rust_distant/m92-attack.mp3")
     self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
     self:SetNextPrimaryFire(CurTime() + 0.2)
     local bullet = {}

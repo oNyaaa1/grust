@@ -15,7 +15,7 @@ function SWEP:PrimaryAttack()
     if not IsValid(pl) then return end
     if SERVER and pl.ConsumeDurabilityForWeapon then pl:ConsumeDurabilityForWeapon(self) end
     pl:SetAnimation(PLAYER_ATTACK1)
-    self:EmitSound("tools/rock_swing.mp3")
+     self:EmitSound("darky_rust.ak74u-attack", 100, 100, 1, CHAN_WEAPON)
     self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
     self:SetNextPrimaryFire(CurTime() + 0.2)
     local bullet = {}

@@ -3,8 +3,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Fixed icons being weird on crafting menu
-Added more weapons etc to crafting
+
 
 
 Ideas:

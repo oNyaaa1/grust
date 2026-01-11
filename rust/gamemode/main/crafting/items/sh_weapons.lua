@@ -136,3 +136,72 @@ ITEMS:RegisterItem("rust_m39_rifle", {
         }
     end,
 }, "Weapons")
+
+ITEMS:RegisterItem("rust_m92", {
+    Name = "M92 Pistol",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/m92.png",
+    Weapon = "rust_m92",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_m249", {
+    Name = "M249",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/m249.png",
+    Weapon = "rust_m249",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_mp5", {
+    Name = "M249",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/mp5.png",
+    Weapon = "rust_mp5",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
