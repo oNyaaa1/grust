@@ -14,7 +14,6 @@ if SERVER then
         local tr = ply:GetEyeTrace()
         if not tr.Hit then return end
         local ent = ents.Create("rust_furnace")
-        
         if not IsValid(ent) then return end
         local targetPos = tr.HitPos + tr.HitNormal * 2
         ent:SetPos(targetPos)
@@ -29,7 +28,8 @@ if SERVER then
             local phys = ent:GetPhysicsObject()
             if IsValid(phys) then phys:EnableMotion(false) end
         end
-ply:EmitSound("deploy/tool_cupboard_deploy.wav")
+
+        ply:EmitSound("farming/furnace_deploy.wav")
     end
 
     function SWEP:SecondaryAttack()

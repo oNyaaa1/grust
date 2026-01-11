@@ -3,9 +3,9 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Added Furnace
-Fixed death not clearing items on the 1-6 hotbar slots
-Added throwing object out of inventory animated
+Fixed duplicate exploit when dropping items gaining 2 times as much
+
+
 ]]
 resource.AddSingleFile("models/player/spike/rustguy_grust.mdl")
 resource.AddSingleFile("materials/mapz/map.png")
