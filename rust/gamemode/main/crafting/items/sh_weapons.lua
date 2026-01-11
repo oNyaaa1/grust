@@ -549,3 +549,72 @@ ITEMS:RegisterItem("rust_pumpshotgun", {
         }
     end,
 }, "Weapons")
+
+ITEMS:RegisterItem("rust_spas12", {
+    Name = "Spas-12 Shotgun",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/spas12.png",
+    Weapon = "rust_spas12",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_combatknife", {
+    Name = "Combat Knife",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/combat_knife.png",
+    Weapon = "rust_combatknife",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_grenadelauncher", {
+    Name = "Multiple Grenade Launcher",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/grenade_launcher.png",
+    Weapon = "rust_grenadelauncher",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")

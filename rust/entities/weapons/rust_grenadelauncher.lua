@@ -1,6 +1,6 @@
 AddCSLuaFile()
-SWEP.ViewModel = "models/weapons/darky_m/rust/c_sawnoffshotgun.mdl"
-SWEP.WorldModel = "models/weapons/darky_m/rust/w_sawnoffshotgun.mdl"
+SWEP.ViewModel = "models/weapons/darky_m/rust/c_grenadelauncher.mdl"
+SWEP.WorldModel = "models/weapons/darky_m/rust/w_grenadelauncher.mdl"
 SWEP.DrawCrosshair = true
 SWEP.UseHands = true
 SWEP.Primary.Automatic = true
@@ -15,22 +15,9 @@ function SWEP:PrimaryAttack()
     if not IsValid(pl) then return end
     if SERVER and pl.ConsumeDurabilityForWeapon then pl:ConsumeDurabilityForWeapon(self) end
     pl:SetAnimation(PLAYER_ATTACK1)
-    self:EmitSound("weapons/rust_distant/lr300-attack.mp3")
+    self:EmitSound("weapons/rust_distant/grenade-launcher-attack.mp3")
     self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
     self:SetNextPrimaryFire(CurTime() + 1)
-    local bullet = {}
-    bullet.Num = 1
-    bullet.Src = pl:GetShootPos()
-    bullet.Dir = pl:GetAimVector()
-    bullet.Spread = 0.4
-    bullet.Tracer = 3
-    bullet.Force = 1
-    bullet.Damage = 55
-    bullet.Attacker = pl
-    pl:FireBullets(bullet)
-    self.Clicked = false
-    local BulletsFire = math.random(0.4, 0.5)
-    pl:SetEyeAngles(pl:GetAngles() - Angle(BulletsFire, BulletsFire, 0))
 end
 
 function SWEP:Reload()
