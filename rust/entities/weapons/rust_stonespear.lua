@@ -1,6 +1,6 @@
 AddCSLuaFile()
-SWEP.ViewModel = "models/weapons/darky_m/rust/c_salvaged_Cleaver.mdl"
-SWEP.WorldModel = "models/weapons/darky_m/rust/w_salvaged_Cleaver.mdl"
+SWEP.ViewModel = "models/weapons/darky_m/rust/c_stone_spear.mdl"
+SWEP.WorldModel = "models/weapons/darky_m/rust/w_stone_spear.mdl"
 SWEP.DrawCrosshair = true
 SWEP.UseHands = true
 SWEP.Primary.Automatic = true
@@ -16,7 +16,7 @@ function SWEP:PrimaryAttack()
     if SERVER and pl.ConsumeDurabilityForWeapon then pl:ConsumeDurabilityForWeapon(self) end
     pl:SetAnimation(PLAYER_ATTACK1)
     self:EmitSound("tools/rock_swing.mp3")
-    self:SendWeaponAnim(ACT_VM_MISSCENTER)
+    self:SendWeaponAnim(ACT_VM_SWINGMISS)
     self.delay = CurTime() + 0.1
     self:SetNextPrimaryFire(CurTime() + 1.2)
     self.Clicked = true
@@ -39,12 +39,12 @@ function SWEP:Think()
                 if findtwig then damage = 25 end
                 -- Hit the entity
                 self:ShootBullet(damage, 1, 0, "", 0, 1)
-                self:SendWeaponAnim(ACT_VM_HITCENTER)
+                self:SendWeaponAnim(ACT_VM_SWINGHIT)
                 self.Clicked = false
             elseif hitDist <= 70 then
                 -- Hit within close range (world/props)
                 self:ShootBullet(math.random(1, 6), 1, 0, "", 0, 1)
-                self:SendWeaponAnim(ACT_VM_HITCENTER)
+                self:SendWeaponAnim(ACT_VM_SWINGHIT)
                 self.Clicked = false
             end
         end

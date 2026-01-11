@@ -368,9 +368,9 @@ function ITEMS.DrawQMenu()
 			-- Draw category name
 			draw.SimpleText(k[1], "DermaDefault", 45, h / 2, RUST_TEXT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 			-- Draw count
-			local count = 0
-			if COUNT and COUNT[string.lower(k[1])] then count = COUNT[string.lower(k[1])] end
-			draw.SimpleText(tostring(count), "DermaDefault", w - 10, h / 2, RUST_TEXT_DIM, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+			local countz = 0
+			if COUNT and COUNT[string.lower(k[1])] then countz = COUNT[string.lower(k[1])] end
+			draw.SimpleText(tostring(countz), "DermaDefault", w - 10, h / 2, RUST_TEXT_DIM, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 		end
 	end
 
