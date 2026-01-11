@@ -89,11 +89,41 @@ local function GetTypeRock(typez)
         return "Sulfur Ore"
     end
 end
+local ORE_WEAPONS = {
+    ["rust_e_rock"] = {
+        Name = "Rock",
+        ["Metal Ore"] = 1,
+        ["Sulfur Ore"] = 1,
+        ["Stone"] = 1,
+    },
+    ["rust_stone_pickaxe"] = {
+        ["Metal Ore"] = 1.94,
+        ["Sulfur Ore"] = 2.57,
+        ["Stone"] = 2.11733
+    },
+    ["rust_pickaxe"] = {
+        ["Metal Ore"] = 2.4,
+        ["Sulfur Ore"] = 3,
+        ["Stone"] = 2.667
+    },
+    ["rust_jackhammer"] = {
+        ["Metal Ore"] = 2.4,
+        ["Sulfur Ore"] = 3,
+        ["Stone"] = 2.667
+    }
+}
+
+
 
 function ENT:OnTakeDamage(dmg)
     if not IsValid(self) then return end
     local attacker = dmg:GetAttacker()
     if not (IsValid(attacker) and attacker:IsPlayer()) then return end
+    local wep = attacker:GetActiveWeapon()
+    if not IsValid(wep) then return end
+    local class = wep:GetClass()
+    local realwep = ORE_WEAPONS[class]
+    if realwep == nil then return end
     attacker:EmitSound("tools/rock_strike_1.mp3")
     if self.SetHealthz == nil then self.SetHealthz = 300 end
     self.SetHealthz = self.SetHealthz - 30

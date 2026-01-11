@@ -3,8 +3,20 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
+Fixed icons being weird on crafting menu
+Added more weapons etc to crafting
+
 
 Ideas:
+
+Admin system,
+Anticheat,
+Chatbox,
+Item menu,
+Minicopter,
+Auto wipe,
+Gold vending machines
+
 Essential Gameplay Systems
 1. Complete Hunger/Thirst System
 You have the variables set up (GetHunger(), GetThirst()) but no actual system. Add:

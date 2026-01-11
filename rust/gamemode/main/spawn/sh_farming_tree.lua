@@ -85,7 +85,7 @@ local WOOD_WEAPONS = {
     ["rust_e_rock"] = {
         mult = 1
     },
-    ["tfa_rustalpha_stone_hatchet"] = {
+    ["rust_stone_hatchet"] = {
         mult = 1.3
     },
     ["tfa_rustalpha_hatchet"] = {

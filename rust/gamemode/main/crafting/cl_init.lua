@@ -2,20 +2,7 @@ ITEMS = ITEMS or {}
 local crafting_frame = nil
 local Width, Height = ScrW(), ScrH()
 local btn = {}
-local Tbl = {}
 local Bottom = nil
-Tbl[1] = {"Favorite", Material("icon16/star.png")}
-Tbl[2] = {"Construction", Material("icon16/brick.png")}
-Tbl[3] = {"Items", Material("icon16/box.png")}
-Tbl[4] = {"Resources", Material("icon16/database.png")}
-Tbl[5] = {"Clothing", Material("icon16/user.png")}
-Tbl[6] = {"Tools", Material("icon16/wrench.png")}
-Tbl[7] = {"Medical", Material("icon16/heart.png")}
-Tbl[8] = {"Weapons", Material("icon16/gun.png")}
-Tbl[9] = {"Ammo", Material("icon16/bullet_red.png")}
-Tbl[11] = {"Fun", Material("icon16/joystick.png")}
-Tbl[12] = {"Other", Material("icon16/folder.png")}
-Tbl[13] = {"Admin", Material("icon16/shield.png")}
 local right = right or nil
 local dpanel = dpanel or nil
 local dpanel2 = dpanel2 or nil
@@ -307,7 +294,7 @@ function ITEMS.DrawQMenu()
 		local itemCount = 0
 		for _, v in pairs(ITEMS) do
 			if not istable(v) then continue end
-			if v.Category ~= nil and v.Category == categoryName then
+			if v.Category ~= nil and string.lower(v.Category) == string.lower(categoryName) then
 				itemCount = itemCount + 1
 				local itemBtn = vgui.Create("DButton")
 				itemBtn:SetSize(0, 150)
@@ -350,7 +337,7 @@ function ITEMS.DrawQMenu()
 
 	-- Create category buttons
 	local selectedCategory = nil
-	for i, k in ipairs(Tbl) do
+	for i, k in ipairs(ITEMS.Catergories) do
 		local DermaButton = vgui.Create("DButton", pnl_dock_btn)
 		DermaButton:SetText("")
 		DermaButton:Dock(TOP)
@@ -382,14 +369,15 @@ function ITEMS.DrawQMenu()
 			draw.SimpleText(k[1], "DermaDefault", 45, h / 2, RUST_TEXT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 			-- Draw count
 			local count = 0
-			if COUNT and COUNT[k[1]] then count = COUNT[k[1]] end
+			if COUNT and COUNT[string.lower(k[1])] then count = COUNT[string.lower(k[1])] end
 			draw.SimpleText(tostring(count), "DermaDefault", w - 10, h / 2, RUST_TEXT_DIM, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 		end
 	end
 
-	if Tbl[1] then
-		selectedCategory = Tbl[1][1]
-		timer.Simple(0, function() if IsValid(grid2new) then LoadCategory(Tbl[1][1]) end end)
+	local category = ITEMS.Catergories
+	if category[1] then
+		selectedCategory = category[1][1]
+		timer.Simple(0, function() if IsValid(grid2new) then LoadCategory(category[1][1]) end end)
 	end
 
 	-- Bottom crafting queue panel

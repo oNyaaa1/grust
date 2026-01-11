@@ -5,7 +5,7 @@ local ORE_WEAPONS = {
         ["Sulfur Ore"] = 1,
         ["Stone"] = 1,
     },
-    ["rust_stone_hatchet"] = {
+    ["rust_stone_pickaxe"] = {
         ["Metal Ore"] = 1.94,
         ["Sulfur Ore"] = 2.57,
         ["Stone"] = 2.11733

@@ -68,7 +68,7 @@ function ITEMS:RegisterItem(itemName, items, category)
 		if type(v) == "table" and v.Category == category then countz = countz + 1 end
 	end
 
-	COUNT[category] = countz
+	COUNT[string.lower(category)] = countz
 end
 
 function ITEMS:GetItem(itemName)
