@@ -113,7 +113,6 @@ ITEMS:RegisterItem("rust_assaultrifle", {
     end,
 }, "Weapons")
 
-
 ITEMS:RegisterItem("rust_m39_rifle", {
     Name = "M39 Rifle",
     Info = "Killing/Defending",
@@ -189,6 +188,144 @@ ITEMS:RegisterItem("rust_mp5", {
     Category = "Weapons",
     model = "materials/items/weapons/mp5.png",
     Weapon = "rust_mp5",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_nailgun", {
+    Name = "Nailgun",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/nailgun.png",
+    Weapon = "rust_nailgun",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_python", {
+    Name = "Python Revolver",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/python.png",
+    Weapon = "rust_python",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_revolver", {
+    Name = "Revolver",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/revolver.png",
+    Weapon = "rust_revolver",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_sap", {
+    Name = "Semi-Automatic Pistol",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/sap.png",
+    Weapon = "rust_sap",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_sar", {
+    Name = "Semi-Automatic Rifle",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/sar.png",
+    Weapon = "rust_sar",
+    Count = 1,
+    Stackable = true,
+    StackSize = 1,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Weapons")
+
+ITEMS:RegisterItem("rust_smg", {
+    Name = "Custom SMG",
+    Info = "Killing/Defending",
+    Category = "Weapons",
+    model = "materials/items/weapons/custom_smg.png",
+    Weapon = "rust_smg",
     Count = 1,
     Stackable = true,
     StackSize = 1,

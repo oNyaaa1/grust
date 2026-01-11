@@ -271,7 +271,7 @@ function ITEMS.DrawQMenu()
 	pnl_dock_Right2:SetPos(0, 0)
 	pnl_dock_Right2:SetSize(750, Height)
 	pnl_dock_Right2.Paint = function(s, w, h)
-		surface.SetDrawColor(Color(255, 255, 255))
+		surface.SetDrawColor(Color(65, 65, 65))
 		surface.DrawRect(0, 0, w, h)
 	end
 
