@@ -1,6 +1,7 @@
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
+util.AddNetworkString("gRustAngleRocks")
 local matr = {"models/blacksnow/rust_rock", "models/blacksnow/rock_ore"}
 function ENT:Initialize()
     self:SetModel("models/environment/ores/ore_node_stage1.mdl")
@@ -89,6 +90,7 @@ local function GetTypeRock(typez)
         return "Sulfur Ore"
     end
 end
+
 local ORE_WEAPONS = {
     ["rust_e_rock"] = {
         Name = "Rock",
@@ -112,8 +114,6 @@ local ORE_WEAPONS = {
         ["Stone"] = 2.667
     }
 }
-
-
 
 function ENT:OnTakeDamage(dmg)
     if not IsValid(self) then return end
@@ -185,6 +185,9 @@ function ENT:OnTakeDamage(dmg)
         self:Remove()
     end
 
+    net.Start("gRustAngleRocks")
+    net.WriteEntity(self)
+    net.Broadcast()
     local rock = GetTypeRock(tr.Entity)
     if not rock then return end
     if similarity > 0.9 then -- Hit the same general area (0.9 = ~25 degree cone)
