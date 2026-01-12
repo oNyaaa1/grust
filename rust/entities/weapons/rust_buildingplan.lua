@@ -64,7 +64,7 @@ if SERVER then
         if ply.SafeZone then return end
         if not IsValid(ply) then return end
         local Count = ply:CountITEM("Wood")
-        if Count < 30 then return end
+        //if Count < 30 then return end
         ply:SetAnimation(PLAYER_ATTACK1)
         local tr = ply:GetEyeTrace()
         if not tr.Hit then return end

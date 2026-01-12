@@ -3,7 +3,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-New rocks for the system of ores
+Fixed doorbug
+
 
 Ideas:
 

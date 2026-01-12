@@ -355,17 +355,6 @@ hook.Add("HUDPaint", "AZRM::Render2D", function()
                         surface.SetDrawColor(0, 0, 0, 255)
                         surface.DrawTexturedRect(centers[i][1], centers[i][2] - fontHeight, 50, 50)
                     end
-
-                    if AZN_RadialMenu.emotes[i] == "sent_door" then
-                        local txt = scripted_ents.Get(AZN_RadialMenu.emotes[i]).PrintName .. "\n"
-                        local txt2 = "This is a Door\nto build after placing a doorway!\n\n\n\n\n"
-                        local txt3 = "25 x Wood (" .. LocalPlayer():GetWood() .. ")"
-                        local txt_n = txt .. txt2 .. txt3
-                        if withinPoly then drawText(txt_n, "Default", ScrW() / 2, ScrH() / 2 - 21, Color(0, 0, 0, 255), TEXT_ALIGN_CENTER) end
-                        surface.SetMaterial(door)
-                        surface.SetDrawColor(0, 0, 0, 255)
-                        surface.DrawTexturedRect(centers[i][1], centers[i][2] - fontHeight, 50, 50)
-                    end
                 end
             end
         else

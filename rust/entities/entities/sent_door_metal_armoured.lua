@@ -7,7 +7,7 @@ ENT.Spawnable = true
 ENT.AdminOnly = false
 if SERVER then
 	function ENT:Initialize()
-		self:SetModel("models/deployable/wooden_door.mdl")
+		self:SetModel("models/deployable/armored_door.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
@@ -49,7 +49,10 @@ end ]]
 			if v:GetClass() == "sent_doorway" then doors = doors + 1 end
 		end
 
-		if doors <= 0 then self:Remove() self.doorLock:Remove() end
+		if doors <= 0 then
+			self:Remove()
+			self.doorLock:Remove()
+		end
 	end
 
 	function ENT:OnTakeDamage(dmg)
