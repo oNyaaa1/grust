@@ -3,8 +3,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Changed blinding white to grey in crafting
-Added even more weapons
+New rocks for the system of ores
 
 Ideas:
 

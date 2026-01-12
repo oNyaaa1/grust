@@ -1,5 +1,5 @@
 gRust = gRust or {}
-DeriveGamemode("base")
+DeriveGamemode("sandbox")
 GM.Name = "gRust | Rust in Garry's Mod"
 local includes = function(f)
     if string.find(f, "sv_") then

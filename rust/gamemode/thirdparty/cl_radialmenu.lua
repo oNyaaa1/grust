@@ -161,8 +161,8 @@ function AZN_RadialMenu.utils.drawArc(polygons)
     end
 end
 
-AZN_RadialMenu.emoteNames = {"sent_foundation", "sent_ceiling", "sent_wall", "sent_doorway", "sent_door"}
-AZN_RadialMenu.emotes = {AZN_RadialMenu.emoteNames[1], AZN_RadialMenu.emoteNames[2], AZN_RadialMenu.emoteNames[3], AZN_RadialMenu.emoteNames[4], AZN_RadialMenu.emoteNames[5]}
+AZN_RadialMenu.emoteNames = {"sent_foundation", "sent_ceiling", "sent_wall", "sent_doorway"}
+AZN_RadialMenu.emotes = {AZN_RadialMenu.emoteNames[1], AZN_RadialMenu.emoteNames[2], AZN_RadialMenu.emoteNames[3], AZN_RadialMenu.emoteNames[4]}
 AZN_RadialMenu.emoteNames2 = {
     "Wood", --, "Stone", "Metal"
     "Rotate"
