@@ -3,9 +3,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Better regression on looking down
-Realistic viewing down
-Added new stuff to guns Reload/Clips etc
+Fixed error in sv_inventory
+Fixed inventory slots not being correct
 
 Ideas:
 
