@@ -3,11 +3,10 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Fixed error in sv_inventory
-Fixed inventory slots not being correct
+Re-added Crafting timer back
+sAndbox_legs 1 on - 0 off -- Turns off legs
 
 Ideas:
-
 Admin system,
 Anticheat,
 Chatbox,

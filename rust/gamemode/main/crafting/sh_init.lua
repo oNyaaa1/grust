@@ -1,8 +1,6 @@
 ITEMS = {}
 ITEMS.ITEM = {}
 COUNT = COUNT or {}
-
-
 if SERVER then
 	concommand.Add("sandbox_give", function(ply, cmd, args)
 		if not ply:IsAdmin() then return end
@@ -23,7 +21,6 @@ if SERVER then
 		local toCraft = ""
 		local toAmount = 0
 		local toTime = 30
-		--local str = net.ReadString()
 		local item = ITEMS:GetItem(tbl[1])
 		for k, v in pairs(item:Craft()) do
 			local itemz = v[1]
@@ -33,13 +30,13 @@ if SERVER then
 		end
 
 		local Count = ply:CountITEM(toCraft)
-		//if Count < toAmount then return end
-		//if not item then return end
-		//timer.Simple(toTime, function()
+		if Count < toAmount then return end
+		if not item then return end
+		timer.Simple(toTime, function()
 			ply:AddInventoryItem({
 				Weapon = item.Weapon,
 			}, true, 1)
-		//end)
+		end)
 
 		ply:CountRemoveInventoryItem(toCraft, toAmount)
 	end)

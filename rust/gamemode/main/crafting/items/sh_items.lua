@@ -72,3 +72,29 @@ ITEMS:RegisterItem("rust_deploy_large_bx", {
         }
     end,
 }, "Items")
+
+ITEMS:RegisterItem("rust_deploy_woodsmallbox", {
+    Name = "Wood Storage Box",
+    Info = "Storage",
+    Category = "Items",
+    model = "materials/items/deployable/wood_box.png",
+    Weapon = "rust_deploy_woodsmallbox",
+    Count = 1,
+    Craft = function()
+        return {
+            {
+                CanCraft = true,
+                Time = 30,
+                {
+                    ITEM = "Stone",
+                    AMOUNT = 250,
+                },
+                {
+                    ITEM = "Low Grade Fuel",
+                    AMOUNT = 150,
+                },
+            },
+        }
+    end,
+}, "Items")
+
