@@ -41,7 +41,7 @@ end ]]
 	function ENT:Think()
 		local doors = 0
 		for k, v in pairs(ents.FindInSphere(self:GetPos(), 30)) do
-			if v:GetClass() == "sent_doorway" then doors = doors + 1 end
+			if v:GetClass() == "sent_way_door" then doors = doors + 1 end
 		end
 
 		if doors <= 0 then

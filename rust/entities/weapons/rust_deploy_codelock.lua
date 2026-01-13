@@ -15,13 +15,13 @@ if SERVER then
         if not tr.Hit then return end
         local strDoor = string.find(tr.Entity:GetClass(), "sent_door")
         if not strDoor then return end
-        self.doorLock = ents.Create("sent_lock")
-        self.doorLock:SetModel("models/deployable/key_lock.mdl")
+        self.doorLock = ents.Create("sent_keypad")
+        self.doorLock:SetModel("models/deployable/keypad.mdl")
         local ent = ply:GetEyeTrace().Entity
         self.doorLock:SetAngles(ent:GetAngles() + Angle(0, 0, 0))
         self.doorLock:SetPos(ent:GetPos() + ent:GetUp() * 38 + ent:GetRight() * 0 + ent:GetForward() * 46)
         self.doorLock:SetParent(ent)
-        ply:RemoveInventoryItem("rust_deploy_lock")
+        ply:RemoveInventoryItem("rust_deploy_codelock")
         ply:EmitSound("farming/furnace_deploy.wav")
     end
 
@@ -45,7 +45,7 @@ else -- CLIENT
         if not IsValid(self.PreviewEnt) then
             self.PreviewEnt = ents.CreateClientProp()
             self.PreviewEnt:Spawn()
-            self.PreviewEnt:SetModel("models/deployable/key_lock.mdl")
+            self.PreviewEnt:SetModel("models/deployable/keypad.mdl")
         end
         return self.PreviewEnt
     end
@@ -69,10 +69,12 @@ else -- CLIENT
 
     function SWEP:Holster()
         local ent = self:GetPreviewEnt()
+
         if IsValid(ent) then
             ent:Remove()
             ent = nil
         end
+
 
     end
 

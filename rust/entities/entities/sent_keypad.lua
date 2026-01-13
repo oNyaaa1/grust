@@ -7,7 +7,7 @@ ENT.Spawnable = true
 ENT.AdminOnly = false
 if SERVER then
 	function ENT:Initialize()
-		self:SetModel("models/deployable/key_lock.mdl")
+		self:SetModel("models/deployable/keypad.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)

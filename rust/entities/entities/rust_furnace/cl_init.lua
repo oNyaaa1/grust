@@ -4,5 +4,4 @@ function ENT:Draw()
 end
 net.Receive("gRustFurnace", function()
     local ent = net.ReadEntity()
-    print(ent)
 end)

@@ -161,7 +161,7 @@ function AZN_RadialMenu.utils.drawArc(polygons)
     end
 end
 
-AZN_RadialMenu.emoteNames = {"sent_foundation", "sent_ceiling", "sent_wall", "sent_doorway"}
+AZN_RadialMenu.emoteNames = {"sent_foundation", "sent_ceiling", "sent_wall", "sent_way_door"}
 AZN_RadialMenu.emotes = {AZN_RadialMenu.emoteNames[1], AZN_RadialMenu.emoteNames[2], AZN_RadialMenu.emoteNames[3], AZN_RadialMenu.emoteNames[4]}
 AZN_RadialMenu.emoteNames2 = {
     "Wood", --, "Stone", "Metal"
@@ -345,7 +345,7 @@ hook.Add("HUDPaint", "AZRM::Render2D", function()
                         surface.DrawTexturedRect(centers[i][1], centers[i][2] - fontHeight, 50, 50)
                     end
 
-                    if AZN_RadialMenu.emotes[i] == "sent_doorway" then
+                    if AZN_RadialMenu.emotes[i] == "sent_way_door" then
                         local txt = scripted_ents.Get(AZN_RadialMenu.emotes[i]).PrintName .. "\n"
                         local txt2 = "This is a Doorway\nto build after placing a foundation!\n\n\n\n\n"
                         local txt3 = "25 x Wood (" .. LocalPlayer():GetWood() .. ")"

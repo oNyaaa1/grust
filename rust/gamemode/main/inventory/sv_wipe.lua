@@ -180,8 +180,24 @@ local function LoadProps()
             if prop.image and ent.SetImage then ent:SetImage(prop.image) end
             ent:Spawn()
             ent:Activate()
-            -- Weld to world for socketed entities
-            if prop.socket then constraint.Weld(ent, game.GetWorld(), 0, 0, 0, true, true) end
+            timer.Simple(0.1, function()
+                if ent:GetClass() == "sent_lock" or ent:GetClass() == "sent_keypad" then
+                    for _, i in pairs(ents.FindInSphere(ent:GetPos(), 5)) do
+                        local fndDoor = string.find(string.lower(i:GetClass()), "sent_door")
+                        if fndDoor then
+                            ent.doorLock = ents.Create(prop.class)
+                            if not ent.doorLock then return end
+                            ent.doorLock:SetModel(prop.model)
+                            ent.doorLock:SetAngles(i:GetAngles() + Angle(0, 0, 0))
+                            ent.doorLock:SetPos(i:GetPos() + i:GetUp() * 38 + i:GetRight() * 0 + i:GetForward() * 46)
+                            ent.doorLock:SetParent(i)
+                            ent:Remove()
+                        end
+                    end
+                end
+            end)
+
+            --if prop.socket then  end
             count = count + 1
         end
     end

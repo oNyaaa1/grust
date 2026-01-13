@@ -3,7 +3,9 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-
+Fixed keypad error
+Fixed another bug where keypads didnt parent them self to door
+Fixed schizo erroring
 
 Ideas:
 

@@ -26,12 +26,6 @@ if SERVER then
 		self.EntCount = 0
 		self.DoorOpen = false
 		self:SetNWInt("health_" .. self:GetClass(), self.Ent_Health)
-		self.doorLock = ents.Create("sent_doorlock")
-		self.doorLock:SetModel("models/deployable/key_lock.mdl")
-		self.doorLock:SetPos(self:GetPos() + Vector(0, 0, 0))
-		self.doorLock:SetAngles(self:GetAngles() + Angle(0, 0, 0))
-		self.doorLock:SetPos(self:GetPos() + self:GetUp() * 38 + self:GetRight() * 0 + self:GetForward() * 46)
-		self.doorLock:SetParent(self)
 	end
 
 	--[[ function ENT:SpawnFunction( ply, tr )
@@ -46,10 +40,13 @@ end ]]
 	function ENT:Think()
 		local doors = 0
 		for k, v in pairs(ents.FindInSphere(self:GetPos(), 30)) do
-			if v:GetClass() == "sent_doorway" then doors = doors + 1 end
+			if v:GetClass() == "sent_way_door" then doors = doors + 1 end
 		end
 
-		if doors <= 0 then self:Remove() self.doorLock:Remove() end
+		if doors <= 0 then
+			if IsValid(self) then self:Remove() end
+			if IsValid(self.doorLock) then self.doorLock:Remove() end
+		end
 	end
 
 	function ENT:OnTakeDamage(dmg)

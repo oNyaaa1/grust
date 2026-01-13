@@ -76,7 +76,7 @@ if SERVER then
         ent:SetModel(sent.Models or "")
         if class == "sent_door" then ent:SetModel("models/deployable/wooden_door.mdl") end
         local isWall = class == "sent_wall" or string.find(string.lower(class), "wall")
-        local isDoorWay = class == "sent_doorway" or string.find(string.lower(class), "doorway")
+        local isDoorWay = class == "sent_way_door" or string.find(string.lower(class), "doorway")
         local groundEnt = ply:GetGroundEntity()
         local targetPos = nil
         local targetAng = nil
