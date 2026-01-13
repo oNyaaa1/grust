@@ -101,6 +101,7 @@ else -- CLIENT
             end
         end
 
+        if targetPos == nil then return end
         ent:SetPos(targetPos)
         if targetAng then ent:SetAngles(Angle(0, targetAng, 0)) end
         ent:SetRenderMode(RENDERMODE_TRANSALPHA)

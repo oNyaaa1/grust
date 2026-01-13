@@ -94,12 +94,12 @@ ITEMS:RegisterItem("rust_deploy_doorway_armoredd", {
     end,
 }, "Construction")
 
-ITEMS:RegisterItem("rust_keylock", {
+ITEMS:RegisterItem("rust_deploy_lock", {
     Name = "Key Lock",
     Info = "Key locks used lock doors",
     Category = "Construction",
     model = "materials/items/deployable/keylock.png",
-    Weapon = "rust_keylock",
+    Weapon = "rust_deploy_lock",
     Count = 50,
     Stackable = true,
     StackSize = 150,

@@ -5,6 +5,7 @@ ENT.PrintName = "Door"
 ENT.Category = ""
 ENT.Spawnable = true
 ENT.AdminOnly = false
+ENT.Lock = NULL
 if SERVER then
 	function ENT:Initialize()
 		self:SetModel("models/deployable/wooden_door.mdl")
@@ -26,12 +27,6 @@ if SERVER then
 		self.EntCount = 0
 		self.DoorOpen = false
 		self:SetNWInt("health_" .. self:GetClass(), self.Ent_Health)
-		self.doorLock = ents.Create("sent_doorlock")
-		self.doorLock:SetModel("models/deployable/key_lock.mdl")
-		self.doorLock:SetPos(self:GetPos() + Vector(0, 0, 0))
-		self.doorLock:SetAngles(self:GetAngles() + Angle(0, 0, 0))
-		self.doorLock:SetPos(self:GetPos() + self:GetUp() * 38 + self:GetRight() * 0 + self:GetForward() * 46)
-		self.doorLock:SetParent(self)
 	end
 
 	--[[ function ENT:SpawnFunction( ply, tr )
@@ -63,6 +58,7 @@ end ]]
 	end
 
 	function ENT:Use(btn, ply)
+		if self.Lock == ply then return end
 		if ply.Meh == nil then ply.Meh = 0 end
 		if ply.Meh >= CurTime() then return end
 		ply.Meh = CurTime() + 0.2

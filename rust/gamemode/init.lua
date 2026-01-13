@@ -4,7 +4,9 @@ include("shared.lua")
 
 --[[
 Fixed doorbug
-
+Fixed error when deploying a door
+Fixed bug where ghosted items would stay
+Doors can now be locked and opened by owner of door
 
 Ideas:
 

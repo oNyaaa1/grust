@@ -50,6 +50,7 @@ if SERVER then
             local phys = ent:GetPhysicsObject()
             if IsValid(phys) then phys:EnableMotion(false) end
         end
+
         ply:RemoveInventoryItem("rust_deploy_doorway_armoredd")
         ply:EmitSound("farming/furnace_deploy.wav")
     end
@@ -100,6 +101,7 @@ else -- CLIENT
             end
         end
 
+        if targetPos == nil then return end
         ent:SetPos(targetPos)
         if targetAng then ent:SetAngles(Angle(0, targetAng, 0)) end
         ent:SetRenderMode(RENDERMODE_TRANSALPHA)
