@@ -44,7 +44,10 @@ end ]]
 			if v:GetClass() == "sent_doorway" then doors = doors + 1 end
 		end
 
-		if doors <= 0 then self:Remove() self.doorLock:Remove() end
+		if doors <= 0 then
+			if IsValid(self) then self:Remove() end
+			if IsValid(self.doorLock) then self.doorLock:Remove() end
+		end
 	end
 
 	function ENT:OnTakeDamage(dmg)
