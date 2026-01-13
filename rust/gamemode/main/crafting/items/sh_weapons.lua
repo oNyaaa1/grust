@@ -183,7 +183,7 @@ ITEMS:RegisterItem("rust_m249", {
 }, "Weapons")
 
 ITEMS:RegisterItem("rust_mp5", {
-    Name = "M249",
+    Name = "MP5",
     Info = "Killing/Defending",
     Category = "Weapons",
     model = "materials/items/weapons/mp5.png",

@@ -5,7 +5,7 @@ SWEP.DrawCrosshair = true
 SWEP.UseHands = true
 SWEP.Primary.Automatic = true
 function SWEP:Initialize()
-    self:SetHoldType("melee2")
+    self:SetHoldType("ar2")
     self.delay = 0
     self.Clicked = false
 end

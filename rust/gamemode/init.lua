@@ -3,9 +3,9 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Fixed keypad error
-Fixed another bug where keypads didnt parent them self to door
-Fixed schizo erroring
+Better regression on looking down
+Realistic viewing down
+Added new stuff to guns Reload/Clips etc
 
 Ideas:
 
