@@ -4,6 +4,7 @@ hook.Add("PlayerSpawn", "sAndbox_PlayerSpawnInventory", function(ply)
     ply.Inventory = {}
     -- Set player model and stats
     ply:SetModel("models/player/darky_m/rust/hazmat.mdl")
+    ply:SetHealth(math.random(50,65))
     ply:SetHunger(math.random(80, 120))
     ply:SetThirst(math.random(80, 120))
     -- Give starting items with longer delay to ensure client is ready

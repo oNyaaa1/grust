@@ -7,16 +7,24 @@ ENT.Spawnable = true
 ENT.AdminOnly = false
 if SERVER then
 	function ENT:Initialize()
-		self:SetModel("models/deployable/metal_door.mdl")
+		self:SetModel("models/deployable/wood_double_door.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetMoveType(MOVETYPE_NONE)
 		self:SetSolid(SOLID_VPHYSICS)
 		local phys = self:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:Wake()
-			phys:EnableMotion(false)
-		end
-
+		if phys:IsValid() then phys:Wake() end
+		self.LftDoor = ents.Create("door_wood_left")
+		self.LftDoor:Spawn()
+		self.LftDoor:Activate()
+		self.LftDoor:SetPos(self:LocalToWorld(Vector(-50.3, 0, 5)))
+		self.LftDoor:SetAngles(self:GetAngles() + Angle(0, 0, 0))
+		self.LftDoor:SetParent(self)
+		self.RghtDoor = ents.Create("door_wood_right")
+		self.RghtDoor:Spawn()
+		self.RghtDoor:Activate()
+		self.RghtDoor:SetPos(self:LocalToWorld(Vector(50, 0, 5)))
+		self.RghtDoor:SetAngles(self:GetAngles() + Angle(0, -180, 0))
+		self.RghtDoor:SetParent(self)
 		--constraint.Weld(self, Entity(0), 0, 0, 0, true, true)
 		self.Ent_Health = 2500
 		self.Ent_HealthMax = 100
@@ -38,15 +46,20 @@ if SERVER then
 	return ent
 end ]]
 	function ENT:Think()
+		--self.LftDoor:SetPos(self:GetPos() + Vector(0,-50,5))
 		local doors = 0
-		for k, v in pairs(ents.FindInSphere(self:GetPos(), 30)) do
-			if v:GetClass() == "sent_way_door" then doors = doors + 1 end
+		local mydd = ents.FindInSphere(self:GetPos(), 500)
+		for k, v in pairs(mydd) do
+			if v:GetClass() == "sent_door_dd_metal" then doors = doors + 1 end
 		end
 
 		if doors <= 0 then
-			if IsValid(self) then self:Remove() end
-			if IsValid(self.doorLock) then self.doorLock:Remove() end
+			--if IsValid(self) then self:Remove() end
+			--if IsValid(self.doorLock) then self.doorLock:Remove() end
 		end
+
+		self:NextThink(CurTime() + 1)
+		return true
 	end
 
 	function ENT:OnTakeDamage(dmg)
@@ -63,21 +76,24 @@ end ]]
 		if ply.Meh == nil then ply.Meh = 0 end
 		if ply.Meh >= CurTime() then return end
 		ply.Meh = CurTime() + 0.2
-		print("test")
 		--if self.PropOwned ~= ply then
 		--ply:ChatPrint("Door is locked")
 		--return
 		--end
 		if self.DoorOpen == false then
-			self.DoorPos = self:GetAngles()
-			self.DoorPosa = self:GetPos()
-			--self:SetPos(self:GetPos() + ply:GetForward() + Vector(28, 25, 7))
-			
+			self.LftDoorAngle = self:GetAngles()
 			self.DoorOpen = true
+			local ang = self:GetAngles()
+			ang:RotateAroundAxis(self:GetUp(), 90)
+			self.LftDoor:SetAngles(ang)
+			self.RghtDoor:SetAngles(ang)
 		elseif self.DoorOpen == true then
-			self:SetPos(self.DoorPosa)
-			self:SetAngles(self.DoorPos)
 			self.DoorOpen = false
+			local ang = self:GetAngles()
+			ang:RotateAroundAxis(self:GetUp(), 0)
+			self.LftDoor:SetAngles(ang)
+			ang:RotateAroundAxis(self:GetUp(), -180)
+			self.RghtDoor:SetAngles(ang)
 		end
 	end
 

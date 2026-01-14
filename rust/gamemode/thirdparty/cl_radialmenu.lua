@@ -161,8 +161,8 @@ function AZN_RadialMenu.utils.drawArc(polygons)
     end
 end
 
-AZN_RadialMenu.emoteNames = {"sent_foundation", "sent_ceiling", "sent_wall", "sent_way_door"}
-AZN_RadialMenu.emotes = {AZN_RadialMenu.emoteNames[1], AZN_RadialMenu.emoteNames[2], AZN_RadialMenu.emoteNames[3], AZN_RadialMenu.emoteNames[4]}
+AZN_RadialMenu.emoteNames = {"sent_foundation", "sent_ceiling", "sent_wall", "sent_way_door", "sent_way_door_spanner"}
+AZN_RadialMenu.emotes = {AZN_RadialMenu.emoteNames[1], AZN_RadialMenu.emoteNames[2], AZN_RadialMenu.emoteNames[3], AZN_RadialMenu.emoteNames[4], AZN_RadialMenu.emoteNames[5]}
 AZN_RadialMenu.emoteNames2 = {
     "Wood", --, "Stone", "Metal"
     "Rotate"
@@ -222,6 +222,7 @@ local foundation = Material("icons/build/foundation.png", "noclamp smooth")
 local wall = Material("icons/build/wall.png", "noclamp smooth")
 local ceiling = Material("icons/build/roof.png", "noclamp smooth")
 local doorway = Material("icons/build/doorframe.png", "noclamp smooth")
+local doorway_Frame = Material("icons/build/wall_frame.png", "noclamp smooth")
 local door = Material("icons/open_door.png", "noclamp smooth")
 concommand.Add("+azrm_showmenu", function() showMenu = true end)
 concommand.Add("-azrm_showmenu", function() showMenu = false end)
@@ -352,6 +353,17 @@ hook.Add("HUDPaint", "AZRM::Render2D", function()
                         local txt_n = txt .. txt2 .. txt3
                         if withinPoly then drawText(txt_n, "Default", ScrW() / 2, ScrH() / 2 - 21, Color(0, 0, 0, 255), TEXT_ALIGN_CENTER) end
                         surface.SetMaterial(doorway)
+                        surface.SetDrawColor(0, 0, 0, 255)
+                        surface.DrawTexturedRect(centers[i][1], centers[i][2] - fontHeight, 50, 50)
+                    end
+
+                    if AZN_RadialMenu.emotes[i] == "sent_way_door_spanner" then
+                        local txt = scripted_ents.Get(AZN_RadialMenu.emotes[i]).PrintName .. "\n"
+                        local txt2 = "This is a Door Frame\nto build after placing a foundation!\n\n\n\n\n"
+                        local txt3 = "25 x Wood (" .. LocalPlayer():GetWood() .. ")"
+                        local txt_n = txt .. txt2 .. txt3
+                        if withinPoly then drawText(txt_n, "Default", ScrW() / 2, ScrH() / 2 - 21, Color(0, 0, 0, 255), TEXT_ALIGN_CENTER) end
+                        surface.SetMaterial(doorway_Frame)
                         surface.SetDrawColor(0, 0, 0, 255)
                         surface.DrawTexturedRect(centers[i][1], centers[i][2] - fontHeight, 50, 50)
                     end

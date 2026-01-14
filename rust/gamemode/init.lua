@@ -3,8 +3,10 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Re-added Crafting timer back
-sAndbox_legs 1 on - 0 off -- Turns off legs
+items from inventory now drop to floor
+Health now random
+Expanded emote for building plan! :D
+Tweaked doorframe
 
 Ideas:
 Admin system,

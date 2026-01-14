@@ -1,22 +1,18 @@
 AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_anim"
-ENT.PrintName = "Door"
+ENT.PrintName = "Door left"
 ENT.Category = ""
 ENT.Spawnable = true
 ENT.AdminOnly = false
 if SERVER then
 	function ENT:Initialize()
-		self:SetModel("models/deployable/metal_door.mdl")
+		self:SetModel("models/darky_m/rust/wooden_door_l.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetMoveType(MOVETYPE_NONE)
 		self:SetSolid(SOLID_VPHYSICS)
 		local phys = self:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:Wake()
-			phys:EnableMotion(false)
-		end
-
+		if phys:IsValid() then phys:Sleep() end
 		--constraint.Weld(self, Entity(0), 0, 0, 0, true, true)
 		self.Ent_Health = 2500
 		self.Ent_HealthMax = 100
@@ -44,8 +40,8 @@ end ]]
 		end
 
 		if doors <= 0 then
-			if IsValid(self) then self:Remove() end
-			if IsValid(self.doorLock) then self.doorLock:Remove() end
+			--if IsValid(self) then self:Remove() end
+			--if IsValid(self.doorLock) then self.doorLock:Remove() end
 		end
 	end
 
@@ -63,7 +59,6 @@ end ]]
 		if ply.Meh == nil then ply.Meh = 0 end
 		if ply.Meh >= CurTime() then return end
 		ply.Meh = CurTime() + 0.2
-		print("test")
 		--if self.PropOwned ~= ply then
 		--ply:ChatPrint("Door is locked")
 		--return
@@ -72,25 +67,12 @@ end ]]
 			self.DoorPos = self:GetAngles()
 			self.DoorPosa = self:GetPos()
 			--self:SetPos(self:GetPos() + ply:GetForward() + Vector(28, 25, 7))
-			
 			self.DoorOpen = true
 		elseif self.DoorOpen == true then
-			self:SetPos(self.DoorPosa)
-			self:SetAngles(self.DoorPos)
+			--self:SetPos(self.DoorPosa)
+			--self:SetAngles(self.DoorPos)
 			self.DoorOpen = false
 		end
-	end
-
-	function ENT:StartTouch(entity)
-		return false
-	end
-
-	function ENT:EndTouch(entity)
-		return false
-	end
-
-	function ENT:Touch(entity)
-		return false
 	end
 end
 

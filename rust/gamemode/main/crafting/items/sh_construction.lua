@@ -142,3 +142,50 @@ ITEMS:RegisterItem("rust_deploy_codelock", {
     end,
 }, "Construction")
 
+ITEMS:RegisterItem("rust_deploy_wooddd", {
+    Name = "Wood Double Door",
+    Info = "Wood Double Door",
+    Category = "Construction",
+    model = "materials/items/deployable/wood_double_door.png",
+    Weapon = "rust_deploy_wooddd",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+ITEMS:RegisterItem("rust_deploy_metaldd", {
+    Name = "Sheet Metal Double Door",
+    Info = "Sheet Metal Double Door",
+    Category = "Construction",
+    model = "materials/items/deployable/sheet_metal_double_door.png",
+    Weapon = "rust_deploy_metaldd",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
