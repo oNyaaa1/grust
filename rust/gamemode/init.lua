@@ -3,10 +3,12 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-items from inventory now drop to floor
-Health now random
-Expanded emote for building plan! :D
-Tweaked doorframe
+Doors fixed
+Double doors can now have locks
+Double doors opened from frame
+Double doors Will be removed if no frame to support them
+Walls rotate with hammer 180 degrees farenheight
+Can no longer farm wood from anything but trees
 
 Ideas:
 Admin system,

@@ -14,7 +14,8 @@ if SERVER then
         local tr = ply:GetEyeTrace()
         if not tr.Hit then return end
         local strDoor = string.find(tr.Entity:GetClass(), "sent_door")
-        if not strDoor then return end
+        local strDoor2 = string.find(tr.Entity:GetClass(), "_dd_")
+        if not strDoor or not strDoor2 then return end
         self.doorLock = ents.Create("sent_keypad")
         self.doorLock:SetModel("models/deployable/keypad.mdl")
         local ent = ply:GetEyeTrace().Entity

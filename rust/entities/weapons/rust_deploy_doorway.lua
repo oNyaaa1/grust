@@ -98,7 +98,7 @@ else -- CLIENT
         local targetPos = nil
         local groundEnt = ply:GetGroundEntity()
         if not targetPos and IsValid(groundEnt) and groundEnt:GetSocket() then
-            local attachPos, attachAng = ent:FindSocketAdvanced(ply, "sent_door_dd_metal")
+            local attachPos, attachAng = ent:FindSocketAdvanced(ply, "sent_door_dd_wood")
             if attachPos then
                 targetPos = groundEnt:GetPos() + attachPos
                 targetAng = attachAng or 0

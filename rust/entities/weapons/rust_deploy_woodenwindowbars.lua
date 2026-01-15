@@ -6,14 +6,6 @@ SWEP.UseHands = true
 SWEP.Automatic = false
 -- Your original global table name
 if SERVER then
-    function SWEP:IsSocketOccupied(pos, radius)
-        radius = radius or 15
-        for _, ent in pairs(ents.FindInSphere(pos, radius)) do
-            if IsValid(ent) and ent:GetSocket() and ent:GetClass() ~= "worldspawn" and ent:GetClass() ~= "sent_way_door_spanner" then if ent:GetPos():Distance(pos) < 25 then return true end end
-        end
-        return false
-    end
-
     function SWEP:PrimaryAttack()
         local ply = self:GetOwner()
         if ply.SafeZone then return end
@@ -21,26 +13,10 @@ if SERVER then
         ply:SetAnimation(PLAYER_ATTACK1)
         local tr = ply:GetEyeTrace()
         if not tr.Hit then return end
-        local ent = ents.Create("sent_door_dd_armoured")
+        local ent = ents.Create("sent_woodwb")
         if not IsValid(ent) then return end
-        local targetPos = nil
-        local targetAng = nil
-        local groundEnt = ply:GetGroundEntity()
-        if not targetPos and IsValid(groundEnt) and groundEnt:GetSocket() then
-            local attachPos, attachAng = ent:FindSocketAdvanced(ply, "sent_door_dd_armoured")
-            if attachPos then
-                targetPos = groundEnt:GetPos() + attachPos
-                targetAng = attachAng or 0
-            end
-        end
-
-        if not targetPos or self:IsSocketOccupied(targetPos) then
-            SafeRemoveEntity(ent)
-            return
-        end
-
+        local targetPos = tr.HitPos + tr.HitNormal * 2
         ent:SetPos(targetPos)
-        ent:SetAngles(Angle(0, targetAng, 0))
         ent:Spawn()
         ent:Activate()
         ent:SetSocket(true)
@@ -53,7 +29,7 @@ if SERVER then
             if IsValid(phys) then phys:EnableMotion(false) end
         end
 
-        ply:RemoveInventoryItem("rust_deploy_doorway_armoredd")
+        ply:RemoveInventoryItem("rust_deploy_woodenwindowbars")
         ply:EmitSound("farming/furnace_deploy.wav")
     end
 
@@ -77,7 +53,7 @@ else -- CLIENT
         if not IsValid(self.PreviewEnt) then
             self.PreviewEnt = ents.CreateClientProp()
             self.PreviewEnt:Spawn()
-            self.PreviewEnt:SetModel("models/zohart/deployables/door_double_toptier.mdl")
+            self.PreviewEnt:SetModel("models/darky_m/rust/woodenbars.mdl")
         end
         return self.PreviewEnt
     end
@@ -93,17 +69,7 @@ else -- CLIENT
             return
         end
 
-        local targetPos = nil
-        local groundEnt = ply:GetGroundEntity()
-        if not targetPos and IsValid(groundEnt) and groundEnt:GetSocket() then
-            local attachPos, attachAng = ent:FindSocketAdvanced(ply, "sent_door_dd_armoured")
-            if attachPos then
-                targetPos = groundEnt:GetPos() + attachPos
-                targetAng = attachAng or 0
-            end
-        end
-
-        if targetPos == nil then return end
+        local targetPos = tr.HitPos + tr.HitNormal * 2
         ent:SetPos(targetPos)
         if targetAng then ent:SetAngles(Angle(0, targetAng, 0)) end
         ent:SetRenderMode(RENDERMODE_TRANSALPHA)

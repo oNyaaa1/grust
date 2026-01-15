@@ -189,3 +189,199 @@ ITEMS:RegisterItem("rust_deploy_metaldd", {
         }
     end,
 }, "Construction")
+
+ITEMS:RegisterItem("rust_deploy_doorway_armoredd", {
+    Name = "Armored Double Door",
+    Info = "Armored Double Door",
+    Category = "Construction",
+    model = "materials/items/deployable/armored_double_door.png",
+    Weapon = "rust_deploy_doorway_armoredd",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+ITEMS:RegisterItem("rust_deploy_doorway_stonebar", {
+    Name = "Stone Barricade",
+    Info = "Useful for pvp fights",
+    Category = "Construction",
+    model = "materials/items/deployable/stone_barricade.png",
+    Weapon = "rust_deploy_doorway_stonebar",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+ITEMS:RegisterItem("rust_deploy_doorway_woodbar", {
+    Name = "Wooden Barricade Cover",
+    Info = "Useful for pvp fights",
+    Category = "Construction",
+    model = "materials/items/deployable/wooden_barricade.png",
+    Weapon = "rust_deploy_doorway_woodbar",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+
+ITEMS:RegisterItem("rust_deploy_doorway_repairbench", {
+    Name = "Repair Bench",
+    Info = "Useful for repairing gears/weapons",
+    Category = "Construction",
+    model = "materials/items/deployable/repair_bench.png",
+    Weapon = "rust_deploy_doorway_repairbench",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+ITEMS:RegisterItem("rust_deploy_doorway_researchtable", {
+    Name = "Repair Bench",
+    Info = "Useful for researching stuff",
+    Category = "Construction",
+    model = "materials/items/deployable/research_table.png",
+    Weapon = "rust_deploy_doorway_researchtable",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+ITEMS:RegisterItem("rust_deploy_doorway_sleepingbag", {
+    Name = "Sleeping Bag",
+    Info = "Spawn point",
+    Category = "Construction",
+    model = "materials/items/deployable/sleeping_bag.png",
+    Weapon = "rust_deploy_doorway_sleepingbag",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+
+ITEMS:RegisterItem("rust_deploy_doorway_bed", {
+    Name = "Bed",
+    Info = "Spawn point",
+    Category = "Construction",
+    model = "materials/items/deployable/bed.png",
+    Weapon = "rust_deploy_doorway_bed",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+ITEMS:RegisterItem("rust_deploy_woodenwindowbars", {
+    Name = "Wooden Window Bars",
+    Info = "For windows",
+    Category = "Construction",
+    model = "materials/items/deployable/wood_window_bars.png",
+    Weapon = "rust_deploy_woodenwindowbars",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+

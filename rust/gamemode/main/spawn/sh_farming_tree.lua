@@ -103,6 +103,8 @@ hook.Add("EntityTakeDamage", "Wood", function(targ, dmg)
     if realwep == nil then return end
     local plytr = ply:GetEyeTrace()
     if plytr.Entity:GetMaterialType() ~= MAT_WOOD then return end
+    local woodfnd = string.find(plytr.Entity:GetModel(),"props_foliage")
+    if not woodfnd then return end
     -- First, get the initial hit position from player's trace
     local startPos = plytr.HitPos
     -- Get the tree's center position

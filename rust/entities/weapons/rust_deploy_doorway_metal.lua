@@ -9,7 +9,7 @@ if SERVER then
     function SWEP:IsSocketOccupied(pos, radius)
         radius = radius or 15
         for _, ent in pairs(ents.FindInSphere(pos, radius)) do
-            if IsValid(ent) and ent:GetSocket() and ent:GetClass() ~= "worldspawn" then if ent:GetPos():Distance(pos) < 25 then return true end end
+            if IsValid(ent) and ent:GetSocket() and ent:GetClass() ~= "worldspawn" and ent:GetClass() ~= "sent_way_door_spanner" then if ent:GetPos():Distance(pos) < 25 then return true end end
         end
         return false
     end

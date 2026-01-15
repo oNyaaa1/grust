@@ -183,7 +183,7 @@ local function LoadProps()
             timer.Simple(0.1, function()
                 if ent:GetClass() == "sent_lock" or ent:GetClass() == "sent_keypad" then
                     for _, i in pairs(ents.FindInSphere(ent:GetPos(), 5)) do
-                        local fndDoor = string.find(string.lower(i:GetClass()), "sent_door")
+                        local fndDoor = string.find(string.lower(i:GetClass()), "door")
                         if fndDoor then
                             ent.doorLock = ents.Create(prop.class)
                             if not ent.doorLock then return end

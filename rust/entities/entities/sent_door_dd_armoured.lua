@@ -38,6 +38,27 @@ if SERVER then
 	return ent
 end ]]
 	function ENT:Think()
+		--self.LftDoor:SetPos(self:GetPos() + Vector(0,-50,5))
+		local doors = 0
+		local mydd = ents.FindInSphere(self:GetPos(), 1)
+		for k, v in pairs(mydd) do
+			local FindStr = string.find(v:GetModel() or "", "wall_frame")
+			if FindStr then doors = 1 end
+		end
+
+		local mydd2 = ents.FindInSphere(self:GetPos(), 1)
+		for k, v in pairs(mydd2) do
+			local FindStr2 = string.find(v:GetModel() or "", "gframe")
+			if FindStr2 then doors = 1 end
+		end
+
+		if doors <= 0 then
+			if IsValid(self) then self:Remove() end
+			if IsValid(self.doorLock) then self.doorLock:Remove() end
+		end
+
+		self:NextThink(CurTime() + 1)
+		return true
 	end
 
 	function ENT:OnTakeDamage(dmg)
@@ -65,18 +86,6 @@ end ]]
 			self:SetSequence("idle_open")
 			self.DoorOpen = false
 		end
-	end
-
-	function ENT:StartTouch(entity)
-		return false
-	end
-
-	function ENT:EndTouch(entity)
-		return false
-	end
-
-	function ENT:Touch(entity)
-		return false
 	end
 end
 

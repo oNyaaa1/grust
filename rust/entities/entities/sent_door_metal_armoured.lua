@@ -38,15 +38,27 @@ if SERVER then
 	return ent
 end ]]
 	function ENT:Think()
+		--self.LftDoor:SetPos(self:GetPos() + Vector(0,-50,5))
 		local doors = 0
-		for k, v in pairs(ents.FindInSphere(self:GetPos(), 30)) do
-			if v:GetClass() == "sent_way_door" then doors = doors + 1 end
+		local mydd = ents.FindInSphere(self:GetPos(), 1)
+		for k, v in pairs(mydd) do
+			local FindStr = string.find(v:GetModel() or "", "wall_frame")
+			if FindStr then doors = 1 end
+		end
+
+		local mydd2 = ents.FindInSphere(self:GetPos(), 1)
+		for k, v in pairs(mydd2) do
+			local FindStr2 = string.find(v:GetModel() or "", "gframe")
+			if FindStr2 then doors = 1 end
 		end
 
 		if doors <= 0 then
 			if IsValid(self) then self:Remove() end
 			if IsValid(self.doorLock) then self.doorLock:Remove() end
 		end
+
+		self:NextThink(CurTime() + 1)
+		return true
 	end
 
 	function ENT:OnTakeDamage(dmg)
@@ -60,6 +72,7 @@ end ]]
 	end
 
 	function ENT:Use(btn, ply)
+		if self.Lock == ply then return end
 		if ply.Meh == nil then ply.Meh = 0 end
 		if ply.Meh >= CurTime() then return end
 		ply.Meh = CurTime() + 0.2

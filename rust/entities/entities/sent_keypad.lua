@@ -24,10 +24,13 @@ if SERVER then
 			if v:GetClass() == "sent_way_door" then doors = doors + 1 end
 		end
 
-		if doors <= 0 then
-			if IsValid(self) then self:Remove() end
-			if IsValid(self.doorLock) then self.doorLock:Remove() end
+		for k, v in pairs(ents.FindInSphere(self:GetPos(), 30)) do
+			local strFind = string.find(string.lower(v:GetClass()), "door")
+			if strFind then doors = doors + 1 end
 		end
+
+		if doors <= 0 then if IsValid(self) then self:Remove() end end
+		if doorlock <= 0 then if IsValid(self.doorLock) then self.doorLock:Remove() end end
 	end
 
 	function ENT:OnTakeDamage(dmg)

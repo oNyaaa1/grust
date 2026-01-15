@@ -13,7 +13,7 @@ if SERVER then
         ply:SetAnimation(PLAYER_ATTACK1)
         local tr = ply:GetEyeTrace()
         if not tr.Hit then return end
-        local strDoor = string.find(tr.Entity:GetClass(), "sent_door")
+        local strDoor = string.find(tr.Entity:GetClass(), "door")
         if not strDoor then return end
         self.doorLock = ents.Create("sent_lock")
         self.doorLock:SetModel("models/deployable/key_lock.mdl")
