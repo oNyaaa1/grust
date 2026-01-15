@@ -262,7 +262,6 @@ ITEMS:RegisterItem("rust_deploy_doorway_woodbar", {
     end,
 }, "Construction")
 
-
 ITEMS:RegisterItem("rust_deploy_doorway_repairbench", {
     Name = "Repair Bench",
     Info = "Useful for repairing gears/weapons",
@@ -335,7 +334,6 @@ ITEMS:RegisterItem("rust_deploy_doorway_sleepingbag", {
     end,
 }, "Construction")
 
-
 ITEMS:RegisterItem("rust_deploy_doorway_bed", {
     Name = "Bed",
     Info = "Spawn point",
@@ -384,4 +382,50 @@ ITEMS:RegisterItem("rust_deploy_woodenwindowbars", {
     end,
 }, "Construction")
 
+ITEMS:RegisterItem("rust_deploy_glasswindow", {
+    Name = "Reinforced Glass Window",
+    Info = "For windows",
+    Category = "Construction",
+    model = "materials/items/deployable/reinforced_glass_window.png",
+    Weapon = "rust_deploy_glasswindow",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
 
+ITEMS:RegisterItem("rust_deploy_embrasureh", {
+    Name = "Metal Horizontal Embrasure",
+    Info = "For windows",
+    Category = "Construction",
+    model = "materials/items/deployable/metal_horizontal_embrasure.png",
+    Weapon = "rust_deploy_embrasureh",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")

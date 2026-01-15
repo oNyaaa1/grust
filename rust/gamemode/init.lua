@@ -3,12 +3,10 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Doors fixed
-Double doors can now have locks
-Double doors opened from frame
-Double doors Will be removed if no frame to support them
-Walls rotate with hammer 180 degrees farenheight
-Can no longer farm wood from anything but trees
+Realistic fall damage
+Stuff in crafting is sorted from a-z
+Fixed item bag being static
+Added even more stuff gold vending machines etc
 
 Ideas:
 Admin system,

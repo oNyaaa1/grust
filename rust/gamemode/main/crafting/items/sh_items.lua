@@ -98,3 +98,124 @@ ITEMS:RegisterItem("rust_deploy_woodsmallbox", {
     end,
 }, "Items")
 
+ITEMS:RegisterItem("rust_deploy_workbenchlvl1", {
+    Name = "Workbench Level 1",
+    Info = "Unlocking tiers 1 etc",
+    Category = "Items",
+    model = "materials/items/deployable/workbench_tier1.png",
+    Weapon = "rust_deploy_workbenchlvl1",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Items")
+
+ITEMS:RegisterItem("rust_deploy_workbenchlvl2", {
+    Name = "Workbench Level 2",
+    Info = "Unlocking tiers 2 etc",
+    Category = "Items",
+    model = "materials/items/deployable/workbench_tier2.png",
+    Weapon = "rust_deploy_workbenchlvl2",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Items")
+
+ITEMS:RegisterItem("rust_deploy_workbenchlvl3", {
+    Name = "Workbench Level 3",
+    Info = "Unlocking tiers 3 etc",
+    Category = "Items",
+    model = "materials/items/deployable/workbench_tier3.png",
+    Weapon = "rust_deploy_workbenchlvl3",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Items")
+
+ITEMS:RegisterItem("rust_deploy_rust_vendingmachine", {
+    Name = "Vending Machine",
+    Info = "Buy stuff",
+    Category = "Items",
+    model = "materials/items/deployable/vending_machine.png",
+    Weapon = "rust_deploy_rust_vendingmachine",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Items")
+
+ITEMS:RegisterItem("rust_deploy_rust_chair", {
+    Name = "Chair",
+    Info = "Sit feel comf",
+    Category = "Items",
+    model = "materials/items/deployable/chair.png",
+    Weapon = "rust_deploy_rust_chair",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Items")
+
+

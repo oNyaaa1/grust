@@ -292,7 +292,7 @@ function ITEMS.DrawQMenu()
 	local function LoadCategory(categoryName)
 		grid2new:Clear()
 		local itemCount = 0
-		for _, v in pairs(ITEMS) do
+		for _, v in SortedPairs(ITEMS) do
 			if not istable(v) then continue end
 			if v.Category ~= nil and string.lower(v.Category) == string.lower(categoryName) then
 				itemCount = itemCount + 1
