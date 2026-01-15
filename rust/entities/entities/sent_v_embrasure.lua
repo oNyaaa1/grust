@@ -7,7 +7,7 @@ ENT.Authorized = {}
 if SERVER then
     util.AddNetworkString("TC_rust_Authorize")
     function ENT:Initialize()
-        self:SetModel("models/deployable/sleeping_bag.mdl")
+        self:SetModel("models/deployable/vertical_embrasure.mdl")
         self:PhysicsInit(SOLID_VPHYSICS)
         self:SetMoveType(MOVETYPE_VPHYSICS)
         self:SetSolid(SOLID_VPHYSICS)

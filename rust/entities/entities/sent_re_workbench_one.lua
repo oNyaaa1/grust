@@ -8,7 +8,7 @@ if SERVER then
     util.AddNetworkString("TC_rust_Authorize")
     function ENT:Initialize()
         self:SetModel("models/deployable/workbench_tier1.mdl")
-        self:PhysicsInitStatic(SOLID_VPHYSICS)
+        self:PhysicsInit(SOLID_VPHYSICS)
         self:SetMoveType(MOVETYPE_VPHYSICS)
         self:SetSolid(SOLID_VPHYSICS)
         self:SetUseType(SIMPLE_USE)

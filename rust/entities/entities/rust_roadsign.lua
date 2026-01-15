@@ -7,7 +7,7 @@ function ENT:Initialize()
     -- Pick a random roadsign model
     local randomModel = RoadSignModels[math.random(#RoadSignModels)]
     self:SetModel(randomModel)
-    self:PhysicsInitStatic(SOLID_VPHYSICS)
+    self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_NONE)
     self:SetSolid(SOLID_VPHYSICS)
     -- Roadsign health settings

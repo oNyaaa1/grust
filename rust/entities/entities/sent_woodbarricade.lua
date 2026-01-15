@@ -7,7 +7,7 @@ ENT.Authorized = {}
 if SERVER then
     function ENT:Initialize()
         self:SetModel("models/deployable/wooden_barricade.mdl")
-        self:PhysicsInitStatic(SOLID_VPHYSICS)
+        self:PhysicsInit(SOLID_VPHYSICS)
         self:SetMoveType(MOVETYPE_VPHYSICS)
         self:SetSolid(SOLID_VPHYSICS)
         self:SetUseType(SIMPLE_USE)

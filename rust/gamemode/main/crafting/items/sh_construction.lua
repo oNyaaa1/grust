@@ -429,3 +429,76 @@ ITEMS:RegisterItem("rust_deploy_embrasureh", {
         }
     end,
 }, "Construction")
+
+ITEMS:RegisterItem("rust_deploy_v_embrasureh", {
+    Name = "Metal Vertical Embrasure",
+    Info = "For windows",
+    Category = "Construction",
+    model = "materials/items/deployable/metal_vertical_embrasure.png",
+    Weapon = "rust_deploy_v_embrasureh",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+ITEMS:RegisterItem("rust_deploy_metal_sf", {
+    Name = "Metal Shop Front",
+    Info = "For windows",
+    Category = "Construction",
+    model = "materials/items/deployable/metal_shop_front.png",
+    Weapon = "rust_deploy_metal_sf",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")
+
+
+ITEMS:RegisterItem("rust_deploy_garagedoor", {
+    Name = "Garage Door",
+    Info = "For door",
+    Category = "Construction",
+    model = "materials/items/deployable/garage_door.png",
+    Weapon = "rust_deploy_garagedoor",
+    Count = 50,
+    Stackable = true,
+    StackSize = 150,
+    IzAdmin = true,
+    Craft = function()
+        return {
+            {
+                Time = 0,
+                CanCraft = false,
+                {
+                    ITEM = "Cloth",
+                    AMOUNT = 0,
+                },
+            },
+        }
+    end,
+}, "Construction")

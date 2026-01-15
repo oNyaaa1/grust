@@ -9,7 +9,7 @@ if SERVER then
     function ENT:Initialize()
         self:SetModel("models/deployable/vending_machine.mdl")
         self:SetColor(Color(239,191,4))
-        self:PhysicsInitStatic(SOLID_VPHYSICS)
+        self:PhysicsInit(SOLID_VPHYSICS)
         self:SetMoveType(MOVETYPE_VPHYSICS)
         self:SetSolid(SOLID_VPHYSICS)
         self:SetUseType(SIMPLE_USE)

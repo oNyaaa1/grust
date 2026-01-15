@@ -3,10 +3,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Realistic fall damage
-Stuff in crafting is sorted from a-z
-Fixed item bag being static
-Added even more stuff gold vending machines etc
+Added collision check on garage door
+
 
 Ideas:
 Admin system,
