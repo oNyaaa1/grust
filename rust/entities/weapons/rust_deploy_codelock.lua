@@ -13,17 +13,18 @@ if SERVER then
         ply:SetAnimation(PLAYER_ATTACK1)
         local tr = ply:GetEyeTrace()
         if not tr.Hit then return end
-        local strDoor = string.find(tr.Entity:GetClass(), "sent_door")
-        local strDoor2 = string.find(tr.Entity:GetClass(), "_dd_")
-        if not strDoor or not strDoor2 then return end
+        local strDoor = string.find(tr.Entity:GetClass(), "door")
+        if not strDoor then return end
+        ply:EmitSound("doors/keylock_lock.wav")
         self.doorLock = ents.Create("sent_keypad")
         self.doorLock:SetModel("models/deployable/keypad.mdl")
         local ent = ply:GetEyeTrace().Entity
         self.doorLock:SetAngles(ent:GetAngles() + Angle(0, 0, 0))
         self.doorLock:SetPos(ent:GetPos() + ent:GetUp() * 38 + ent:GetRight() * 0 + ent:GetForward() * 46)
         self.doorLock:SetParent(ent)
+        self.doorLock.Lock = ply
         ply:RemoveInventoryItem("rust_deploy_codelock")
-        ply:EmitSound("farming/furnace_deploy.wav")
+        self:EmitSound("doors/keylock_lock.wav")
     end
 
     function SWEP:SecondaryAttack()

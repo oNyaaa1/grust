@@ -72,10 +72,12 @@ end ]]
 		if self.DoorOpen == false then
 			self.DoorPos = self:GetAngles()
 			self.DoorPosa = self:GetPos()
+			self:EmitSound("doors/door_wood_open.wav")
 			--self:SetPos(self:GetPos() + ply:GetForward() + Vector(28, 25, 7))
 			self:SetAngles(self:GetAngles() + Angle(0, math.sin(FrameTime() * 90) * 90, 0))
 			self.DoorOpen = true
 		elseif self.DoorOpen == true then
+			self:EmitSound("doors/door_wood_close.wav")
 			self:SetPos(self.DoorPosa)
 			self:SetAngles(self.DoorPos)
 			self.DoorOpen = false

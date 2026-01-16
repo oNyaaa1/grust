@@ -3,7 +3,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 --[[
-Added collision check on garage door
+Can now open door while looking at it garagedoor
 
 
 Ideas:
@@ -13,7 +13,6 @@ Chatbox,
 Item menu,
 Minicopter,
 Auto wipe,
-Gold vending machines
 
 Essential Gameplay Systems
 1. Complete Hunger/Thirst System

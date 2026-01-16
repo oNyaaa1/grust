@@ -8,12 +8,12 @@ ENT.AdminOnly = false
 if SERVER then
 	function ENT:Initialize()
 		self:SetModel("models/deployable/key_lock.mdl")
-		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetMoveType(MOVETYPE_VPHYSICS)
-		self:SetSolid(SOLID_VPHYSICS)
+		self:PhysicsInit(SOLID_NONE)
+		self:SetMoveType(MOVETYPE_NONE)
+		self:SetSolid(SOLID_NONE)
 		local phys = self:GetPhysicsObject()
 		if phys:IsValid() then
-			phys:Wake()
+			phys:Sleep()
 			phys:EnableMotion(false)
 		end
 	end
@@ -30,7 +30,7 @@ if SERVER then
 		end
 
 		if doors <= 0 then if IsValid(self) then self:Remove() end end
-		if doorlock <= 0 then if IsValid(self.doorLock) then self.doorLock:Remove() end end
+		if doors <= 0 then if IsValid(self.doorLock) then self.doorLock:Remove() end end
 	end
 
 	function ENT:OnTakeDamage(dmg)

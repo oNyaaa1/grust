@@ -9,7 +9,7 @@ if SERVER then
     function SWEP:IsSocketOccupied(pos, radius)
         radius = radius or 15
         for _, ent in pairs(ents.FindInSphere(pos, radius)) do
-            if IsValid(ent) and ent:GetSocket() and ent:GetClass() ~= "worldspawn" and ent:GetClass() ~= "sent_way_door_spanner" then if ent:GetPos():Distance(pos) < 25 then return true end end
+            if IsValid(ent) and ent:GetSocket() and ent:GetClass() ~= "worldspawn" and ent:GetClass() ~= "sent_way_door" then if ent:GetPos():Distance(pos) < 25 then return true end end
         end
         return false
     end
@@ -21,13 +21,13 @@ if SERVER then
         ply:SetAnimation(PLAYER_ATTACK1)
         local tr = ply:GetEyeTrace()
         if not tr.Hit then return end
-        local ent = ents.Create("sent_garagedoor")
+        local ent = ents.Create("sent_door")
         if not IsValid(ent) then return end
         local targetPos = nil
         local targetAng = nil
         local groundEnt = ply:GetGroundEntity()
         if not targetPos and IsValid(groundEnt) and groundEnt:GetSocket() then
-            local attachPos, attachAng = ent:FindSocketAdvanced(ply, "sent_garagedoor")
+            local attachPos, attachAng = ent:FindSocketAdvanced(ply, "sent_door")
             if attachPos then
                 targetPos = groundEnt:GetPos() + attachPos
                 targetAng = attachAng or 0
@@ -44,6 +44,8 @@ if SERVER then
         ent:Spawn()
         ent:Activate()
         ent:SetSocket(true)
+        local phys = ent:GetPhysicsObject()
+        --/if IsValid(phys) then phys:EnableMotion(false) end
         ply:CountRemoveInventoryItem("Wood", 30)
         if class == "sent_ceiling" then
             ent:PhysicsInit(SOLID_VPHYSICS)
@@ -53,7 +55,7 @@ if SERVER then
             if IsValid(phys) then phys:EnableMotion(false) end
         end
 
-        ply:RemoveInventoryItem("rust_deploy_garagedoor")
+        ply:RemoveInventoryItem("rust_deploy_door")
         ply:EmitSound("farming/furnace_deploy.wav")
     end
 
@@ -77,7 +79,7 @@ else -- CLIENT
         if not IsValid(self.PreviewEnt) then
             self.PreviewEnt = ents.CreateClientProp()
             self.PreviewEnt:Spawn()
-            self.PreviewEnt:SetModel("models/darky_m/rust/building/garage_door.mdl")
+            self.PreviewEnt:SetModel("models/deployable/wooden_door.mdl")
         end
         return self.PreviewEnt
     end
@@ -96,7 +98,7 @@ else -- CLIENT
         local targetPos = nil
         local groundEnt = ply:GetGroundEntity()
         if not targetPos and IsValid(groundEnt) and groundEnt:GetSocket() then
-            local attachPos, attachAng = ent:FindSocketAdvanced(ply, "sent_garagedoor")
+            local attachPos, attachAng = ent:FindSocketAdvanced(ply, "sent_door")
             if attachPos then
                 targetPos = groundEnt:GetPos() + attachPos
                 targetAng = attachAng or 0

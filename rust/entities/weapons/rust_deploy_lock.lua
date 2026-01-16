@@ -15,14 +15,15 @@ if SERVER then
         if not tr.Hit then return end
         local strDoor = string.find(tr.Entity:GetClass(), "door")
         if not strDoor then return end
-        self.doorLock = ents.Create("sent_lock")
-        self.doorLock:SetModel("models/deployable/key_lock.mdl")
-        local ent = ply:GetEyeTrace().Entity
-        self.doorLock:SetAngles(ent:GetAngles() + Angle(0, 0, 0))
-        self.doorLock:SetPos(ent:GetPos() + ent:GetUp() * 38 + ent:GetRight() * 0 + ent:GetForward() * 46)
-        self.doorLock:SetParent(ent)
+        ply:EmitSound("doors/keylock_lock.wav")
+        tr.Entity.doorLock = ents.Create("sent_lock")
+        tr.Entity.doorLock:SetModel("models/deployable/key_lock.mdl")
+        tr.Entity.doorLock:SetPos(tr.Entity:GetPos() + tr.Entity:GetUp() * 38 + tr.Entity:GetRight() * 0 + tr.Entity:GetForward() * 46)
+        tr.Entity.doorLock:SetAngles(tr.Entity:GetAngles())
+        tr.Entity.doorLock:Spawn()
+        tr.Entity.doorLock:Activate()
+        tr.Entity.doorLock:SetParent(tr.Entity)
         ply:RemoveInventoryItem("rust_deploy_lock")
-        ply:EmitSound("farming/furnace_deploy.wav")
     end
 
     function SWEP:SecondaryAttack()
@@ -73,7 +74,6 @@ else -- CLIENT
             ent:Remove()
             ent = nil
         end
-
     end
 
     function SWEP:Deploy()

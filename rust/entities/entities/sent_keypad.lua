@@ -16,6 +16,7 @@ if SERVER then
 			phys:Wake()
 			phys:EnableMotion(false)
 		end
+		self:EmitSound("doors/keypad_lock.wav")
 	end
 
 	function ENT:Think()

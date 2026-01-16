@@ -104,15 +104,6 @@ end ]]
 			self.RghtDoor:SetAngles(ang)
 		end
 	end
-
-	function ENT:StartTouch(entity)
-		local doors = 0
-		if entity:GetClass() == "sent_way_door_spanner" then doors = 1 end
-		if doors <= 0 then
-			if IsValid(self) then self:Remove() end
-			if IsValid(self.doorLock) then self.doorLock:Remove() end
-		end
-	end
 end
 
 if CLIENT then

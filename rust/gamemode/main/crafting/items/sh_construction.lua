@@ -22,12 +22,12 @@ ITEMS:RegisterItem("rust_deploy_tc", {
     end,
 }, "Construction")
 
-ITEMS:RegisterItem("rust_deploy_doorway", {
+ITEMS:RegisterItem("rust_deploy_door", {
     Name = "Wooden Door",
     Info = "Wooden Door For the door frame",
     Category = "Construction",
     model = "materials/items/deployable/wooden_door.png",
-    Weapon = "rust_deploy_doorway",
+    Weapon = "rust_deploy_door",
     Count = 50,
     Stackable = true,
     StackSize = 150,
